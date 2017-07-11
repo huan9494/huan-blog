@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Myblog</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="">
+      <nav class="navbar navbar-default navbar-inverse">
+        <div class="">
+          <div class="navbar-header">
+            <a class="navbar-brand" href=<%= root_path %>>MY BLOG</a>
+          </div>
+            <ul class="nav navbar-nav"></ul>
+            <ul class="nav navbar-nav navbar-right">
+              <% if user_signed_in? %>
+                <li>
+                  <a data-no-turbolink="true" rel="nofollow" data-method="delete" href= <%= destroy_user_session_path %> ><b>Sign out</b></a>
+                </li>
+              <% else %>
+                <li>
+                  <a href= <%= new_user_session_path %> ><b>Sign in</b></a>
+                </li>
+              <% end %> %>
+              
+            </ul>
+        </div>
+      </nav>
+      <div class="container">
+        <%= yield %>
+      </div>
+    </div>
+  </body>
+</html>

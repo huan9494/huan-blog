@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  body: MyText
+  published: 1
+  promoted: 1
+  publish: 2017-07-11 13:46:34
+  image: MyString
+  category: one
+  author_name: MyString
+  author_position: MyString
+  author_age: 1
+  author_avatar: MyString
+  biglikes_count: 1
+  likes_count: 1
+  dislikes_count: 1
+  bigdislikes_count: 1
+
+two:
+  title: MyString
+  body: MyText
+  published: 1
+  promoted: 1
+  publish: 2017-07-11 13:46:34
+  image: MyString
+  category: two
+  author_name: MyString
+  author_position: MyString
+  author_age: 1
+  author_avatar: MyString
+  biglikes_count: 1
+  likes_count: 1
+  dislikes_count: 1
+  bigdislikes_count: 1
