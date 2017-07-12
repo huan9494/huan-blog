@@ -1,1 +1,101 @@
-this is the admin page!
+<div class="row">
+  <div class="well">
+    Search filter
+    <br>
+    <hr>
+    <div class="row" style="position: relative;">
+      <form action="/admin/search" data-remote="true">
+        <div class="col-sm-2">
+          <div class="form-group">
+            Title
+            <input type="text" name="query" id="blog_query" class="form-control">
+          </div>
+        </div>
+        <div class="col-sm-10">
+          <div class="col-sm-2">
+            <div class="form-group">
+              Category
+              <select name="category_select" id="category_select">
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              Published
+              <select name="category_select" id="category_select">
+                <option value="volvo">Published</option>
+                <option value="saab">not_published</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              Promoted
+              <select name="category_select" id="category_select">
+                <option value="volvo">Promoted</option>
+                <option value="saab">not_promoted</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              Sort
+              <select name="category_select" id="category_select">
+                <option value="volvo">Ascending</option>
+                <option value="saab">Descending</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              <button type="submit" class="btn btn-default" style="position: absolute; top: 15px; left: 0;">Update</button>
+            </div>
+          </div>
+      </form>
+    </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-2">
+    <%= link_to "New blog", "#", class: "btn btn-primary" %>
+  </div>
+  <div class="col-sm-2">
+    <%= link_to "New category", "#", class: "btn btn-primary" %>
+  </div>
+</div>
+<br>
+<div class="row">
+  <%= will_paginate @blogs %>
+  <table class=" table table-strip">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Created_at</th>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Promoted</th>
+        <th>Author</th>
+        <th>Image</th>
+        <th>Published</th>
+        <th>Publish</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <%= will_paginate @blogs %>
+</div>

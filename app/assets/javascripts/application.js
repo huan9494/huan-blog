@@ -19,5 +19,11 @@
 //= require_tree .
 $(document).on("turbolinks:load", function(){
   $("#date_field").datepicker();
+
+  $("#preview").on("click", function(ev){
+    var content = CKEDITOR.instances['body_text'].getData();
+    $("#modal_content").html(content);
+    $("#myModal").modal();;
+    ev.preventDefault();
+  });
 })
-$("#date_field").datepicker();
