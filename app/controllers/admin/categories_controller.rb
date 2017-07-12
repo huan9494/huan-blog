@@ -1,4 +1,6 @@
-class CategoriesController < ApplicationController
+class Admin::CategoriesController < ApplicationController
+
+  layout 'admin'
   def new
     @category = Category.new
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170712084108) do
+ActiveRecord::Schema.define(version: 20170712084110) do
 
   create_table "blog_users", force: :cascade do |t|
     t.integer  "action"
@@ -28,19 +28,18 @@ ActiveRecord::Schema.define(version: 20170712084108) do
     t.integer  "published",         default: 0
     t.integer  "promoted",          default: 0
     t.datetime "publish"
-    t.string   "image",             default: "http://localhost:3000/assets/author_avatar.png"
-    t.integer  "category_id"
+    t.string   "image",             default: ""
     t.string   "author_name",       default: "ナルフォード"
     t.string   "author_position",   default: "塾講師"
     t.integer  "author_age",        default: 26
-    t.string   "author_avatar",     default: "http://localhost:3000/assets/author_avatar.png"
-    t.integer  "biglikes_count",    default: 0,                                                null: false
-    t.integer  "likes_count",       default: 0,                                                null: false
-    t.integer  "dislikes_count",    default: 0,                                                null: false
-    t.integer  "bigdislikes_count", default: 0,                                                null: false
-    t.datetime "created_at",                                                                   null: false
-    t.datetime "updated_at",                                                                   null: false
-    t.index ["category_id"], name: "index_blogs_on_category_id"
+    t.string   "author_avatar",     default: ""
+    t.integer  "biglikes_count",    default: 0,        null: false
+    t.integer  "likes_count",       default: 0,        null: false
+    t.integer  "dislikes_count",    default: 0,        null: false
+    t.integer  "bigdislikes_count", default: 0,        null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.string   "category"
   end
 
   create_table "categories", force: :cascade do |t|

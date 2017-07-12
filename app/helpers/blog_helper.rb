@@ -1,6 +1,7 @@
 module BlogHelper
   def custom_errors(blog)
     @title_error = ''
+    @category_error = ''
     @publish_error = ''
     @image_error = ''
     @body_error = ''
@@ -13,6 +14,9 @@ module BlogHelper
       blog.errors.messages.each_with_index do |msg,idx|
         if msg[0].eql?(:title)
           @title_error = msg[1].last
+        end
+        if msg[0].eql?(:category)
+          @category_error = msg[1].last
         end
         if msg[0].eql?(:publish)
           @publish_error = msg[1].last
@@ -38,7 +42,7 @@ module BlogHelper
       end 
     end
   end
-  def category_array(category)
+  def category_array
     Category.order("created_at ASC").pluck(:name)
   end
 end

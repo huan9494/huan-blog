@@ -3,7 +3,7 @@ class Admin::BlogsController < ApplicationController
   layout 'admin'
   before_action :set_blog, only: [:show, :edit, :destroy, :update]
   def index
-    @blogs = Blog.order("created_at DESC").paginate(page: params[:page], per_page: 20)
+    @blogs = Blog.order("created_at ASC").paginate(page: params[:page], per_page: 20)
   end
   def show
   end
@@ -11,8 +11,7 @@ class Admin::BlogsController < ApplicationController
     @blog = Blog.new
   end
   def create
-    @category = Category.where(name: params[:category]).first
-    @blog = @category.blogs.new(blog_params)
+    @blog = Blog.new(blog_params)
     if @blog.save
       redirect_to admin_root_path
     else
@@ -22,11 +21,7 @@ class Admin::BlogsController < ApplicationController
   def edit
   end
   def update
-    if @blog.update(blog_params)
-      redirect_to admin_root_path
-    else
-      render 'edit'
-    end
+    @blog.update(blog_params)
   end
   def destroy
     redirect_to admin_root_path

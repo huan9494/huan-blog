@@ -1,8 +1,7 @@
 class Blog < ApplicationRecord
-  belongs_to :category
   enum published: [:not_published, :published]
   enum promoted: [:not_promoted, :promoted]
-  validates :title, presence: true, length: {maximum: 255},
+  validates :title, length: {maximum: 255},
             presence: {message: "^We need to know who is filling in this form (your name)"}
   validates :publish, presence: true
   validates :body, presence: true

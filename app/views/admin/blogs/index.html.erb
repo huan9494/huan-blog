@@ -16,10 +16,9 @@
             <div class="form-group">
               Category
               <select name="category_select" id="category_select">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+                <% category_array.each do |e| %>
+                  <option value="volvo"><%= e %></option>
+                <% end %>
               </select>
             </div>
           </div>
@@ -27,7 +26,7 @@
             <div class="form-group">
               Published
               <select name="category_select" id="category_select">
-                <option value="volvo">Published</option>
+                <option value="volvo">published</option>
                 <option value="saab">not_published</option>
               </select>
             </div>
@@ -36,7 +35,7 @@
             <div class="form-group">
               Promoted
               <select name="category_select" id="category_select">
-                <option value="volvo">Promoted</option>
+                <option value="volvo">promoted</option>
                 <option value="saab">not_promoted</option>
               </select>
             </div>
@@ -67,10 +66,10 @@
 </div>
 <div class="row">
   <div class="col-sm-2">
-    <%= link_to "New blog", "#", class: "btn btn-primary" %>
+    <%= link_to "New blog", new_admin_blog_path, class: "btn btn-primary" %>
   </div>
   <div class="col-sm-2">
-    <%= link_to "New category", "#", class: "btn btn-primary" %>
+    <%= link_to "New category", new_admin_category_path, class: "btn btn-primary" %>
   </div>
 </div>
 <br>
@@ -92,9 +91,40 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td></td>
-      </tr>
+      <% @blogs.each do |blog| %>
+        <tr>
+          <td><%= blog.id %></td>
+          <td><%= blog.created_at %></td>
+          <td><%= blog.title %></td>
+          <td><%= blog.category%></td>
+
+          <% if blog.promoted == "promoted" %>
+            <td>ok</td>
+          <% else %>
+            <td></td>
+          <% end %>
+          <td><%= blog.author_name %></td>
+          <td><%= image_tag blog.image.url, width: 100, height: 100 %></td>
+
+          <% if blog.published == "published" %>
+            <td id="published_blog_<%=blog.id%>">ok</td>
+          <% else %>
+            <td></td>
+          <% end %>
+
+          <td>
+            <div class="row"><%= blog.publish %></div>
+            <div class="row">
+              <span><%= link_to "change_date", "#", class: " btn btn-xs btn-default" %></span>
+                
+              <% if blog.published == "published" %>
+                <span id="published_button_<%=blog.id%>"><%= link_to "unpublished", admin_blog_path(blog.id, blog: {published: "not_published"}), class: "btn btn-xs btn-danger", remote: true, :method => :patch %></span>
+              <% end %>
+            </div>
+          </td>
+          <td><%= link_to "Edit", edit_admin_blog_path(blog.id), class: "btn btn-default" %></td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
   <%= will_paginate @blogs %>
