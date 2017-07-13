@@ -1,10 +1,10 @@
 <div class="panel-body">
-<div class="modal fade" id="myModal" role="dialog" style="padding: 30px;">
+<div class="modal fade" id="myModal" role="dialog">
   <div class="modal-dialog" id="modal_content" style="padding: 10px;">
 
   </div>
 </div>
-  <%= form_for [:admin, @blog], remote: true do |f| %>
+  <%= form_for [:admin, @blog] do |f| %>
     <% custom_errors(@blog) %>
     <div class="row">
       <div class="form-group">
@@ -76,8 +76,9 @@
           <%= f.label :image, class: "form-title pull-right" %>
         </div>
         <div class="col-sm-3">
-          <!-- <img src="http://localhost:3000/assets/author_avatar.png", width=100, height=100> -->
-          <%= f.file_field :image, class: "form-control" %>
+          <div class="gallery"></div>
+
+          <%= f.file_field :image, class: "form-control", id: "blog_image" %>
           <% if @image_error.length > 0 %>
             <div class="alert alert-danger"><%= @image_error %></div>
           <% end %>
@@ -151,8 +152,9 @@
           <%= f.label :author_avatar, class: "form-title pull-right" %>
         </div>
         <div class="col-sm-3">
-          <!-- <img src="http://localhost:3000/assets/author_avatar.png", width=100, height=100> -->
-          <%= f.file_field :author_avatar, class: "form-control" %>
+          <div class="author_avatar_gallery"></div>
+
+          <%= f.file_field :author_avatar, class: "form-control", id: "author_avatar_image" %>
           <% if @author_avatar_error.length > 0 %>
             <div class="alert alert-danger"><%= @author_avatar_error %></div>
           <% end %>
@@ -166,10 +168,43 @@
           <%= link_to "List", admin_root_path, class: "btn btn-default" %>
         </div>
         <div class="col-sm-6">
-          <%= f.button "Submit", class: "btn btn-primary", onclick: "window.location.replace('/admin')" %>
+          <%= f.button "Submit", class: "btn btn-primary" %>
         </div>
       </div>
     </div>
     <br>
   <% end %>
 </div>
+<script>
+  CKEDITOR.replace('body_text');
+
+  $(function() {
+      var imagesPreview = function(input, placeToInsertImagePreview) {
+
+          if (input.files) {
+              var filesAmount = input.files.length;
+
+              for (i = 0; i < filesAmount; i++) {
+                  var reader = new FileReader();
+
+                  reader.onload = function(event) {
+                      $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                  }
+
+                  reader.readAsDataURL(input.files[i]);
+              }
+          }
+
+      };
+
+      $('#blog_image').on('change', function() {
+          $('div.gallery').empty();
+          imagesPreview(this, 'div.gallery');
+      });
+      $('#author_avatar_image').on('change', function() {
+          $('div.author_avatar_gallery').empty();
+          imagesPreview(this, 'div.author_avatar_gallery');
+      });
+  });
+
+</script>

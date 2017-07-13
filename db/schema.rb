@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170712084110) do
+ActiveRecord::Schema.define(version: 20170713014525) do
 
   create_table "blog_users", force: :cascade do |t|
     t.integer  "action"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20170712084110) do
     t.text     "body"
     t.integer  "published",         default: 0
     t.integer  "promoted",          default: 0
-    t.datetime "publish"
+    t.date     "publish"
     t.string   "image",             default: ""
     t.string   "author_name",       default: "ナルフォード"
     t.string   "author_position",   default: "塾講師"

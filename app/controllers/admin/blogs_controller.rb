@@ -4,6 +4,10 @@ class Admin::BlogsController < ApplicationController
   before_action :set_blog, only: [:show, :edit, :destroy, :update]
   def index
     @blogs = Blog.order("created_at ASC").paginate(page: params[:page], per_page: 20)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
   def show
   end
@@ -21,12 +25,21 @@ class Admin::BlogsController < ApplicationController
   def edit
   end
   def update
-    @blog.update(blog_params)
+    if @blog.update(blog_params)
+      redirect_to admin_root_path unless params[:redirect_check]
+    else
+      render 'edit'
+    end
   end
   def destroy
     redirect_to admin_root_path
   end
-
+  def search
+    sort = Blog.sort_funct(params[:sort])
+    @blogs = Blog.find_excute(params[:category], params[:published],
+                              params[:promoted], params[:query], sort).
+                              paginate(page: params[:page], per_page: 20)
+  end
   private
   def set_blog
     @blog = Blog.find(params[:id])

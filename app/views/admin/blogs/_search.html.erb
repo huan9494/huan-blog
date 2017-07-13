@@ -1,0 +1,102 @@
+<div>
+  <table class=" table table-strip">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Created_at</th>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Promoted</th>
+        <th>Author</th>
+        <th>Image</th>
+        <th>Published</th>
+        <th>Publish</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="my-blogs">
+      <% @blogs.each do |blog| %>
+        <tr>
+          <td><%= blog.id %></td>
+          <td><%= blog.created_at.to_date %></td>
+          <td><%= blog.title %></td>
+          <td><%= blog.category%></td>
+
+          <% if blog.promoted == "promoted" %>
+            <td>ok</td>
+          <% else %>
+            <td></td>
+          <% end %>
+          <td><%= blog.author_name %></td>
+          <td><%= image_tag blog.image.url, width: 100, height: 100 %></td>
+
+          <% if blog.published == "published" %>
+            <td id="published_blog_<%=blog.id%>">ok</td>
+          <% else %>
+            <td></td>
+          <% end %>
+
+          <td>
+            <div class="row" id="publish_time_<%=blog.id%>" class="publish_time" ><%= blog.publish.to_date %></div>
+            <div class="row" blog_id=<%=blog.id%> >
+              <input type="hidden" id="hiddenField_<%=blog.id%>" class="hidden_field" >
+                
+              <% if blog.published == "published" %>
+                <span class="btn btn-xs btn-danger published_button" id="published_button_<%=blog.id%>" >unpublished</span>
+              <% end %>
+            </div>
+          </td>
+          <td><%= link_to "Edit", edit_admin_blog_path(blog.id), class: "btn btn-default" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div id="infinite-scrolling">
+  <%= will_paginate @blogs, remote: true %>
+</div>
+<script>
+  $(".hidden_field").datepicker({
+    showOn: 'button',
+    dateFormat: 'yy-mm-dd',
+    buttonText: 'Change_Date',
+    onSelect: function(data){
+      
+      var a = $(this).parent().attr("blog_id");
+      var b = $(this).val();
+      $.ajax({
+        url: '/admin/blogs/'+a,
+        dataType: 'script',
+        method: "patch",
+        data: {blog:{publish: toDateReverse(toDate(b))}},
+        success: function(){
+          $("#publish_time_"+a).html(b);
+        }
+      });
+    }
+  }).next(".ui-datepicker-trigger").addClass("btn btn-xs btn-default");
+
+  function toDate(dateStr) {
+    return $.datepicker.parseDate("yy-mm-dd", dateStr);
+  };
+
+  function toDateReverse(dateStr) {
+    var a = $.datepicker.parseDate("D M dd yy", dateStr);
+    return $.datepicker.formatDate('yy-mm-dd', a)
+  };
+
+  $(".published_button").on("click", function(){
+      var a = $(this).parent().attr("blog_id");
+      $.ajax({
+        url: '/admin/blogs/'+a,
+        dataType: 'script',
+        method: 'patch',
+        data: {blog:{published: "not_published"}},
+        success: function(){
+          $("#published_blog_" + a).html("");
+          $("#published_button_" + a).hide();
+        }
+      });
+    });
+  
+</script>

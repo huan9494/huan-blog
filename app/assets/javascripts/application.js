@@ -18,7 +18,10 @@
 //= require turbolinks
 //= require_tree .
 $(document).on("turbolinks:load", function(){
-  $("#date_field").datepicker();
+  $("#date_field").datepicker(
+    {
+      dateFormat: 'yy-mm-dd'
+    });
 
   $("#preview").on("click", function(ev){
     var content = CKEDITOR.instances['body_text'].getData();
@@ -26,4 +29,17 @@ $(document).on("turbolinks:load", function(){
     $("#myModal").modal();;
     ev.preventDefault();
   });
-})
+
+  if ($('#infinite-scrolling').size() > 0) {
+    $(window).on("scroll", function(){
+      var more_blogs_url = $('.pagination .next_page a').attr('href');
+      if (more_blogs_url && $(window).scrollTop() > $(document).height() - $(window).height() - 200) {
+        $('.pagination').html('<i class="fa fa-spinner" aria-hidden="true"></i>');
+        $.getScript(more_blogs_url);
+      }
+      
+    });
+  }
+  
+
+});

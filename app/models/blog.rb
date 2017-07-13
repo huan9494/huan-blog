@@ -15,4 +15,18 @@ class Blog < ApplicationRecord
   mount_uploader :author_avatar, FileUploader
   validates_integrity_of :image
   validates_integrity_of :author_avatar
+
+  scope :find_excute, -> (category, published, promoted, query, sort){where(category: category,
+                                                                     published: published,
+                                                                     promoted: promoted).where(
+                                                                     "title LIKE ?", "%#{query}%").
+                                                                     order(sort)}
+  def self.sort_funct(sort)
+    case sort
+    when "ASC"
+      "created_at ASC"
+    else
+      "created_at DESC"
+    end
+  end
 end

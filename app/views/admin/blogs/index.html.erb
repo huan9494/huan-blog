@@ -4,7 +4,7 @@
     <br>
     <hr>
     <div class="row" style="position: relative;">
-      <form action="/admin/search" data-remote="true">
+      <form action="/admin/blogs/search" data-remote="true">
         <div class="col-sm-2">
           <div class="form-group">
             Title
@@ -15,38 +15,46 @@
           <div class="col-sm-2">
             <div class="form-group">
               Category
-              <select name="category_select" id="category_select">
-                <% category_array.each do |e| %>
-                  <option value="volvo"><%= e %></option>
-                <% end %>
-              </select>
+              <div>
+                <select name="category" id="category_select">
+                  <% category_array.each do |e| %>
+                    <option value="<%= e %>"><%= e %></option>
+                  <% end %>
+                </select>
+              </div>
             </div>
           </div>
           <div class="col-sm-2">
             <div class="form-group">
               Published
-              <select name="category_select" id="category_select">
-                <option value="volvo">published</option>
-                <option value="saab">not_published</option>
-              </select>
+              <div>
+                <select name="published" id="category_select">
+                  <option value="published">published</option>
+                  <option value="not_published">not_published</option>
+                </select>
+              </div>
             </div>
           </div>
           <div class="col-sm-2">
             <div class="form-group">
               Promoted
-              <select name="category_select" id="category_select">
-                <option value="volvo">promoted</option>
-                <option value="saab">not_promoted</option>
-              </select>
+              <div>
+                <select name="promoted" id="category_select">
+                  <option value="promoted">promoted</option>
+                  <option value="not_promoted">not_promoted</option>
+                </select>
+              </div>
             </div>
           </div>
           <div class="col-sm-2">
             <div class="form-group">
               Sort
-              <select name="category_select" id="category_select">
-                <option value="volvo">Ascending</option>
-                <option value="saab">Descending</option>
-              </select>
+              <div>
+                <select name="sort" id="category_select">
+                  <option value="ASC">ASC</option>
+                  <option value="DESC">DESC</option>
+                </select>
+              </div>
             </div>
           </div>
           <div class="col-sm-2">
@@ -73,59 +81,30 @@
   </div>
 </div>
 <br>
-<div class="row">
-  <%= will_paginate @blogs %>
-  <table class=" table table-strip">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Created_at</th>
-        <th>Title</th>
-        <th>Category</th>
-        <th>Promoted</th>
-        <th>Author</th>
-        <th>Image</th>
-        <th>Published</th>
-        <th>Publish</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @blogs.each do |blog| %>
+<div class="row" id="search_blog" >
+  <%= will_paginate @blogs, remote: true %>
+  <div>
+    <table class=" table table-strip">
+      <thead>
         <tr>
-          <td><%= blog.id %></td>
-          <td><%= blog.created_at %></td>
-          <td><%= blog.title %></td>
-          <td><%= blog.category%></td>
-
-          <% if blog.promoted == "promoted" %>
-            <td>ok</td>
-          <% else %>
-            <td></td>
-          <% end %>
-          <td><%= blog.author_name %></td>
-          <td><%= image_tag blog.image.url, width: 100, height: 100 %></td>
-
-          <% if blog.published == "published" %>
-            <td id="published_blog_<%=blog.id%>">ok</td>
-          <% else %>
-            <td></td>
-          <% end %>
-
-          <td>
-            <div class="row"><%= blog.publish %></div>
-            <div class="row">
-              <span><%= link_to "change_date", "#", class: " btn btn-xs btn-default" %></span>
-                
-              <% if blog.published == "published" %>
-                <span id="published_button_<%=blog.id%>"><%= link_to "unpublished", admin_blog_path(blog.id, blog: {published: "not_published"}), class: "btn btn-xs btn-danger", remote: true, :method => :patch %></span>
-              <% end %>
-            </div>
-          </td>
-          <td><%= link_to "Edit", edit_admin_blog_path(blog.id), class: "btn btn-default" %></td>
+          <th>ID</th>
+          <th>Created_at</th>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Promoted</th>
+          <th>Author</th>
+          <th>Image</th>
+          <th>Published</th>
+          <th>Publish</th>
+          <th>Action</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <%= will_paginate @blogs %>
+      </thead>
+      <tbody id="my-blogs">
+        <%= render "blog" %>
+      </tbody>
+    </table>
+  </div>
+  <div id="infinite-scrolling">
+    <%= will_paginate @blogs, remote: true %>
+  </div>
 </div>
