@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20170713014525) do
     t.text     "body"
     t.integer  "published",         default: 0
     t.integer  "promoted",          default: 0
-    t.date     "publish"
+    t.datetime "publish"
     t.string   "image",             default: ""
     t.string   "author_name",       default: "ナルフォード"
     t.string   "author_position",   default: "塾講師"

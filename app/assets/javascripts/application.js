@@ -12,15 +12,17 @@
 //
 //= require jquery
 //= require bootstrap-sprockets
-//= require jquery-ui
 //= require ckeditor/init
 //= require jquery_ujs
+//= require moment
+//= require bootstrap-datetimepicker
+//= require moment/ja
 //= require turbolinks
 //= require_tree .
 $(document).on("turbolinks:load", function(){
-  $("#date_field").datepicker(
+  $("#date_field").datetimepicker(
     {
-      dateFormat: 'yy-mm-dd'
+      locale: 'ja'
     });
 
   $("#preview").on("click", function(ev){
@@ -33,8 +35,8 @@ $(document).on("turbolinks:load", function(){
   if ($('#infinite-scrolling').size() > 0) {
     $(window).on("scroll", function(){
       var more_blogs_url = $('.pagination .next_page a').attr('href');
-      if (more_blogs_url && $(window).scrollTop() > $(document).height() - $(window).height() - 200) {
-        $('.pagination').html('<i class="fa fa-spinner" aria-hidden="true"></i>');
+      if (more_blogs_url && $(window).scrollTop() > $(document).height() - $(window).height() - 60) {
+        $('.pagination').html('<i class="fa fa-spinner fa-spin" style="font-size:40px; color: black;"></i>');
         $.getScript(more_blogs_url);
       }
       

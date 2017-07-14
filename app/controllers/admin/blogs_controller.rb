@@ -3,7 +3,8 @@ class Admin::BlogsController < ApplicationController
   layout 'admin'
   before_action :set_blog, only: [:show, :edit, :destroy, :update]
   def index
-    @blogs = Blog.order("created_at ASC").paginate(page: params[:page], per_page: 20)
+    @blogs = Blog.order("id ASC").paginate(page: params[:page], per_page: 20, total_entries: 3000)
+    # @blogs = Blog.search("*",order: {id: :asc},page: params[:page], per_page: 20)
     respond_to do |format|
       format.html
       format.js
@@ -39,6 +40,12 @@ class Admin::BlogsController < ApplicationController
     @blogs = Blog.find_excute(params[:category], params[:published],
                               params[:promoted], params[:query], sort).
                               paginate(page: params[:page], per_page: 20)
+    # if params[:query].length > 0
+    #   @blogs = search_query(params[:query])
+    # else
+    #   @blogs = search_query("*")
+    # end
+    
   end
   private
   def set_blog
@@ -48,5 +55,13 @@ class Admin::BlogsController < ApplicationController
     params.require(:blog).permit(:title, :body, :published, :promoted,
                                  :publish, :image, :category,
                                  :author_name, :author_position, :author_age, :author_avatar)
+  end
+  def search_query(query)
+    Blog.search(query, fields: [{title: :word_start}],
+                       where: {category: params[:category],
+                               published: params[:published],
+                               promoted: params[:promoted]},
+                        order: {id: :asc },
+                       page: params[:page], per_page: 20)
   end
 end

@@ -39,7 +39,12 @@
           <td>
             <div class="row" id="publish_time_<%=blog.id%>" class="publish_time" ><%= blog.publish.to_date %></div>
             <div class="row" blog_id=<%=blog.id%> >
-              <input type="hidden" id="hiddenField_<%=blog.id%>" class="hidden_field" >
+              <div class='input-group date datetimepicker_cell' style="display: inline;">
+                  <input type='hidden' id="hidden_field_<%=blog.id%>" >
+                  <span class="input-group-addon" style="padding: 0; background-color: transparent; border: none; display: inline;">
+                      <span class="btn btn-xs btn-default" >change_date</span>
+                  </span>
+              </div>
                 
               <% if blog.published == "published" %>
                 <span class="btn btn-xs btn-danger published_button" id="published_button_<%=blog.id%>" >unpublished</span>
@@ -52,39 +57,57 @@
     </tbody>
   </table>
 </div>
-<div id="infinite-scrolling">
-  <%= will_paginate @blogs, remote: true %>
-</div>
+<div id="infinite-scrolling" class="col-sm-10 col-sm-offset-1 text-center" >
+    <%= will_paginate @blogs, remote: true %>
+  </div>
 <script>
-  $(".hidden_field").datepicker({
-    showOn: 'button',
-    dateFormat: 'yy-mm-dd',
-    buttonText: 'Change_Date',
-    onSelect: function(data){
+  // $(".hidden_field").datetimepicker({
+  //   showOn: 'button',
+  //   dateFormat: 'yy-mm-dd',
+  //   buttonText: 'Change_Date',
+  //   onSelect: function(data){
       
-      var a = $(this).parent().attr("blog_id");
-      var b = $(this).val();
-      $.ajax({
-        url: '/admin/blogs/'+a,
-        dataType: 'script',
-        method: "patch",
-        data: {blog:{publish: toDateReverse(toDate(b))}},
-        success: function(){
-          $("#publish_time_"+a).html(b);
-        }
-      });
-    }
-  }).next(".ui-datepicker-trigger").addClass("btn btn-xs btn-default");
+  //     var a = $(this).parent().attr("blog_id");
+  //     var b = $(this).val();
+  //     $.ajax({
+  //       url: '/admin/blogs/'+a,
+  //       dataType: 'script',
+  //       method: "patch",
+  //       // data: {blog:{publish: toDateReverse(toDate(b))}},
+  //       success: function(){
+  //         $("#publish_time_"+a).html(b);
+  //       }
+  //     });
+  //   }
+  // }).next(".ui-datepicker-trigger").addClass("btn btn-xs btn-default");
 
-  function toDate(dateStr) {
-    return $.datepicker.parseDate("yy-mm-dd", dateStr);
-  };
+  // // function toDate(dateStr) {
+  // //   return $.datepicker.parseDate("yy-mm-dd", dateStr);
+  // // };
 
-  function toDateReverse(dateStr) {
-    var a = $.datepicker.parseDate("D M dd yy", dateStr);
-    return $.datepicker.formatDate('yy-mm-dd', a)
-  };
+  // // function toDateReverse(dateStr) {
+  // //   var a = $.datepicker.parseDate("D M dd yy", dateStr);
+  // //   return $.datepicker.formatDate('yy-mm-dd', a)
+  // // };
+  $('.datetimepicker_cell').datetimepicker({
+    locale: 'ja'
+  });
 
+
+$('.datetimepicker_cell').on('dp.change', function(data){
+    var a = $(this).parent().attr("blog_id");
+    $(".bootstrap-datetimepicker-widget").hide();
+    $.ajax({
+      url: '/admin/blogs/'+a,
+      dataType: 'script',
+      method: "patch",
+      data: {redirect_check: 1, blog:{publish: data.date.format("Y-MM-D hh:mm") }},
+      success: function(){
+        $("#publish_time_"+a).html(data.date.format("Y-MM-D hh:mm"));
+        
+      }
+    });
+  });
   $(".published_button").on("click", function(){
       var a = $(this).parent().attr("blog_id");
       $.ajax({

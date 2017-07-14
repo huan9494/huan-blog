@@ -1,4 +1,7 @@
 class Blog < ApplicationRecord
+  # searchkick word_start: [:title], callbacks: :async,
+  #            highlight: [:title], searchable: [:title],
+  #            filterable: [:title, :published, :promoted, :category, :id]
   enum published: [:not_published, :published]
   enum promoted: [:not_promoted, :promoted]
   validates :title, length: {maximum: 255},
@@ -29,4 +32,6 @@ class Blog < ApplicationRecord
       "created_at DESC"
     end
   end
+
+  
 end
