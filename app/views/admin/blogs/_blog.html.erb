@@ -39,40 +39,10 @@
 <% end %>
 
 <script>
-  // $(".hidden_field").datepicker({
-  //   showOn: 'button',
-  //   dateFormat: 'yy-mm-dd',
-  //   buttonText: 'Change_Date',
-  //   onSelect: function(data){
-      
-  //     var a = $(this).parent().attr("blog_id");
-  //     var b = $(this).val();
-  //     $.ajax({
-  //       url: '/admin/blogs/'+a,
-  //       dataType: 'script',
-  //       method: "patch",
-  //       data: {redirect_check: 1, blog:{publish: toDateReverse(toDate(b))}},
-  //       success: function(){
-  //         $("#publish_time_"+a).html(b);
-  //       }
-  //     });
-  //   }
-  // }).next(".ui-datepicker-trigger").addClass("btn btn-xs btn-default");
-
-  // function toDate(dateStr) {
-  //   return $.datepicker.parseDate("yy-mm-dd", dateStr);
-  // };
-
-  // function toDateReverse(dateStr) {
-  //   var a = $.datepicker.parseDate("D M dd yy", dateStr);
-  //   return $.datepicker.formatDate('yy-mm-dd', a)
-  // };
-  // function showdatepicker(){
-  //   $(this).children("input").datetimepicker("show");
-  // };
 
   $('.datetimepicker_cell').datetimepicker({
-    locale: 'ja'
+    locale: 'ja',
+    useCurrent: false
   });
 
 

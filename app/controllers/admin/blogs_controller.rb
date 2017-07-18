@@ -3,7 +3,7 @@ class Admin::BlogsController < ApplicationController
   layout 'admin'
   before_action :set_blog, only: [:show, :edit, :destroy, :update]
   def index
-    @blogs = Blog.order("id ASC").paginate(page: params[:page], per_page: 20, total_entries: 3000)
+    @blogs = Blog.order("id ASC").paginate(page: params[:page], per_page: 20)
     # @blogs = Blog.search("*",order: {id: :asc},page: params[:page], per_page: 20)
     respond_to do |format|
       format.html

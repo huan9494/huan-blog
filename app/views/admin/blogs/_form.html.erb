@@ -1,182 +1,189 @@
 <div class="panel-body">
-<div class="modal fade" id="myModal" role="dialog">
-  <div class="modal-dialog" id="modal_content" style="padding: 10px;">
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog" id="modal_content" style="padding: 10px;">
 
+    </div>
   </div>
-</div>
-  <%= form_for [:admin, @blog] do |f| %>
-    <% custom_errors(@blog) %>
-    <div class="row">
-      <div class="form-group">
-        <div class="col-sm-2">
-          <%= f.label :title, class: "form-title pull-right" %>
-        </div>
-        <div class="col-sm-10">
-          <%= f.text_field :title, autofocus: true, class: 'form-control' %>
-          <% if @title_error.length > 0 %>
-            <div class="alert alert-danger"><%= @title_error %></div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="form-group">
-        <div class="col-sm-2">
-          <%= f.label :category, class: "form-title pull-right" %>
-        </div>
-        <div class="col-sm-10">
-          <%= f.select :category, options_for_select(category_array),class: 'form-control' %>
-          <% if @category_error.length > 0 %>
-            <div class="alert alert-danger"><%= @category_error %></div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="form-group">
-        <div class="col-sm-2">
-          <%= f.label :publish, class: "form-title pull-right" %>
-        </div>
-        <div class="col-sm-5">
-          <%= f.text_field :publish, class: 'form-control', id: "date_field" %>
-          <% if @publish_error.length > 0 %>
-            <div class="alert alert-danger"><%= @publish_error %></div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="form-group">
-        <div class="col-sm-2">
-          <%= f.label :published, class: "form-title pull-right" %>
-        </div>
-        <div class="col-sm-10">
-          <%= f.check_box(:published, {}, "published", "not_published") %>
-        </div>
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="form-group">
-        <div class="col-sm-2">
-          <%= f.label :promoted, class: "form-title pull-right" %>
-        </div>
-        <div class="col-sm-10">
-          <%= f.check_box(:promoted, {}, "promoted", "not_promoted") %>
-        </div>
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="form-group">
-        <div class="col-sm-2">
-          <%= f.label :image, class: "form-title pull-right" %>
-        </div>
-        <div class="col-sm-3">
-          <div class="gallery"></div>
-
-          <%= f.file_field :image, class: "form-control", id: "blog_image" %>
-          <% if @image_error.length > 0 %>
-            <div class="alert alert-danger"><%= @image_error %></div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="form-group">
-        <div class="col-sm-2">
-          <%= f.label :body, class: "form-title pull-right" %>
-        </div>
-        <div class="col-sm-10">
-          <div id="preview"><%= link_to "<b>Preview</b>".html_safe, "#" %></div>
-          <br>
-          <% if @body_error.length > 0 %>
-            <div class="alert alert-danger"><%= @body_error %></div>
-          <% end %>
-          <div>
-            <%= f.text_area :body, class: "form-control ckeditor", id: "body_text" %>
+  <% cache('cache_form', skip_digest: true) do %>
+    <%= form_for [:admin, @blog] do |f| %>
+      <% custom_errors(@blog) %>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-sm-2">
+            <%= f.label :title, class: "form-title pull-right" %>
+          </div>
+          <div class="col-sm-10">
+            <%= f.text_field :title, autofocus: true, class: 'form-control' %>
+            <% if @title_error.length > 0 %>
+              <div class="alert alert-danger"><%= @title_error %></div>
+            <% end %>
           </div>
         </div>
       </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="form-group">
-        <div class="col-sm-2">
-          <%= f.label :author_name, class: "form-title pull-right" %>
-        </div>
-        <div class="col-sm-5">
-          <%= f.text_field :author_name, class: "form-control" %>
-          <% if @author_name_error.length > 0 %>
-            <div class="alert alert-danger"><%= @author_name_error %></div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="form-group">
-        <div class="col-sm-2">
-          <%= f.label :author_position, class: "form-title pull-right" %>
-        </div>
-        <div class="col-sm-5">
-          <%= f.text_field :author_position, class: "form-control" %>
-          <% if @author_position_error.length > 0 %>
-            <div class="alert alert-danger"><%= @author_position_error %></div>
-          <% end %>
+      <br>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-sm-2">
+            <%= f.label :category, class: "form-title pull-right" %>
+          </div>
+          <div class="col-sm-10">
+            <%= f.select :category, options_for_select(category_array),class: 'form-control' %>
+            <% if @category_error.length > 0 %>
+              <div class="alert alert-danger"><%= @category_error %></div>
+            <% end %>
+          </div>
         </div>
       </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="form-group" data-no-turbolink>
-        <div class="col-sm-2">
-          <%= f.label :author_age, class: "form-title pull-right" %>
-        </div>
-        <div class="col-sm-3">
-          <%= f.text_field :author_age, type: "number", class: "form-control" %>
-          <% if @author_age_error.length > 0 %>
-            <div class="alert alert-danger"><%= @author_age_error %></div>
-          <% end %>
+      <br>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-sm-2">
+            <%= f.label :publish, class: "form-title pull-right" %>
+          </div>
+          <div class="col-sm-5">
+            <%= f.text_field :publish, class: 'form-control', id: "date_field" %>
+            <% if @publish_error.length > 0 %>
+              <div class="alert alert-danger"><%= @publish_error %></div>
+            <% end %>
+          </div>
         </div>
       </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="form-group">
-        <div class="col-sm-2">
-          <%= f.label :author_avatar, class: "form-title pull-right" %>
+      <br>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-sm-2">
+            <%= f.label :published, class: "form-title pull-right" %>
+          </div>
+          <div class="col-sm-10">
+            <%= f.check_box(:published, {}, "published", "not_published") %>
+          </div>
         </div>
-        <div class="col-sm-3">
-          <div class="author_avatar_gallery"></div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-sm-2">
+            <%= f.label :promoted, class: "form-title pull-right" %>
+          </div>
+          <div class="col-sm-10">
+            <%= f.check_box(:promoted, {}, "promoted", "not_promoted") %>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-sm-2">
+            <%= f.label :image, class: "form-title pull-right" %>
+          </div>
+          <div class="col-sm-3">
+            <div class="gallery">
+              <img src="/assets/author_avatar" alt="image">
+            </div>
 
-          <%= f.file_field :author_avatar, class: "form-control", id: "author_avatar_image" %>
-          <% if @author_avatar_error.length > 0 %>
-            <div class="alert alert-danger"><%= @author_avatar_error %></div>
-          <% end %>
+            <%= f.file_field :image, class: "form-control", id: "blog_image" %>
+            <% if @image_error.length > 0 %>
+              <div class="alert alert-danger"><%= @image_error %></div>
+            <% end %>
+          </div>
         </div>
       </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="form-group col-sm-2 col-sm-offset-5">
-        <div class="col-sm-6">
-          <%= link_to "List", admin_root_path, class: "btn btn-default" %>
-        </div>
-        <div class="col-sm-6">
-          <%= f.button "Submit", class: "btn btn-primary" %>
+      <br>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-sm-2">
+            <%= f.label :body, class: "form-title pull-right" %>
+          </div>
+          <div class="col-sm-10">
+            <div id="preview"><%= link_to "<b>Preview</b>".html_safe, "#" %></div>
+            <br>
+            <% if @body_error.length > 0 %>
+              <div class="alert alert-danger"><%= @body_error %></div>
+            <% end %>
+            <div>
+              <%= f.text_area :body, class: "form-control ckeditor", id: "body_text" %>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <br>
+      <br>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-sm-2">
+            <%= f.label :author_name, class: "form-title pull-right" %>
+          </div>
+          <div class="col-sm-5">
+            <%= f.text_field :author_name, class: "form-control" %>
+            <% if @author_name_error.length > 0 %>
+              <div class="alert alert-danger"><%= @author_name_error %></div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-sm-2">
+            <%= f.label :author_position, class: "form-title pull-right" %>
+          </div>
+          <div class="col-sm-5">
+            <%= f.text_field :author_position, class: "form-control" %>
+            <% if @author_position_error.length > 0 %>
+              <div class="alert alert-danger"><%= @author_position_error %></div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="form-group" data-no-turbolink>
+          <div class="col-sm-2">
+            <%= f.label :author_age, class: "form-title pull-right" %>
+          </div>
+          <div class="col-sm-3">
+            <%= f.text_field :author_age, type: "number", class: "form-control" %>
+            <% if @author_age_error.length > 0 %>
+              <div class="alert alert-danger"><%= @author_age_error %></div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-sm-2">
+            <%= f.label :author_avatar, class: "form-title pull-right" %>
+          </div>
+          <div class="col-sm-3">
+            <div class="author_avatar_gallery">
+              <img src="/assets/author_avatar" alt="image">
+            </div>
+
+            <%= f.file_field :author_avatar, class: "form-control", id: "author_avatar_image" %>
+            <% if @author_avatar_error.length > 0 %>
+              <div class="alert alert-danger"><%= @author_avatar_error %></div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="form-group col-sm-2 col-sm-offset-5">
+          <div class="col-sm-6">
+            <%= link_to "List", admin_root_path, class: "btn btn-default" %>
+          </div>
+          <div class="col-sm-6">
+            <%= f.button "Submit", class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+      <br>
+    <% end %>
   <% end %>
 </div>
 <script>
   CKEDITOR.replace('body_text');
+  var CKEDITOR_BASEPATH = '/assets/ckeditor/';
 
   $(function() {
       var imagesPreview = function(input, placeToInsertImagePreview) {
