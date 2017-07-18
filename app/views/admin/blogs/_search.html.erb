@@ -18,7 +18,7 @@
       <% @blogs.each do |blog| %>
         <tr>
           <td><%= blog.id %></td>
-          <td><%= blog.created_at.to_date %></td>
+          <td><%= blog.created_at %></td>
           <td><%= blog.title %></td>
           <td><%= blog.category%></td>
 
@@ -37,7 +37,7 @@
           <% end %>
 
           <td>
-            <div class="row" id="publish_time_<%=blog.id%>" class="publish_time" ><%= blog.publish.to_date %></div>
+            <div class="row" id="publish_time_<%=blog.id%>" class="publish_time" ><%= blog.publish %></div>
             <div class="row" blog_id=<%=blog.id%> >
               <div class='input-group date datetimepicker_cell' style="display: inline;">
                   <input type='hidden' id="hidden_field_<%=blog.id%>" >
@@ -90,7 +90,8 @@
   // //   return $.datepicker.formatDate('yy-mm-dd', a)
   // // };
   $('.datetimepicker_cell').datetimepicker({
-    locale: 'ja'
+    locale: 'ja',
+    useCurrent: false
   });
 
 

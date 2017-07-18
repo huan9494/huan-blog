@@ -1,29 +1,9 @@
-<div class="main">
-  <div class="row">
-    <div class="row menu-bar"></div>
-  </div>
-  <div class="row">
-    <div class="blog">
-      <p>記事タイトルが入ります。記事タイトルが入ります。記事タイトルが入ります。記事タイトルが入ります。</p>
-
-    </div>
-  </div>
-  <div class="row">
-    <div class="blog">
-      <p>記事タイトルが入ります。記事タイトルが入ります。記事タイトルが入ります。記事タイトルが入ります。</p>
-      
-    </div>
-  </div>
-  <div class="row">
-    <div class="blog">
-      <p>記事タイトルが入ります。記事タイトルが入ります。記事タイトルが入ります。記事タイトルが入ります。</p>
-      
-    </div>
-  </div>
-  <div class="row">
-    <div class="blog">
-      <p>記事タイトルが入ります。記事タイトルが入ります。記事タイトルが入ります。記事タイトルが入ります。</p>
-      
-    </div>
+<div class="row menu-bar"></div>
+<div class="main-view">
+  <ul id="my-blogs-user">
+    <%= render 'blog' %>
+  </ul>
+  <div id="infinite-scrolling-user" class="text-center">
+    <%= will_paginate(@blogs) %>
   </div>
 </div>

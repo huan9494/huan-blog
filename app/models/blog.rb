@@ -33,5 +33,6 @@ class Blog < ApplicationRecord
     end
   end
 
+  self.inheritance_column = nil
   
 end

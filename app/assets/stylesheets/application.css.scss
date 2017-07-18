@@ -15,8 +15,6 @@
  *= require_tree .
  *= require_self
  */
-@import "bootstrap-sprockets";
-@import "bootstrap";
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 @import 'bootstrap-datetimepicker';
@@ -72,39 +70,85 @@ div.author_avatar_gallery img{
     height: 100px;
 }
 body{
-  height: 100vh;
   width: 100vw;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 header{
-  background-color: #ff7300;
-  height: 6.521vh;
-  font-size: 24px;
+  z-index: 101;
+  /*font-size: 24px;*/
+  font-size: 2.17vh;
+  font-weight: bold;
   color: white;
-  .text-center p{
-    margin-top: 2.09%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  #header-top{
+    height: 6.521vh;
+    width: 100vw;
+    background-color: #ff7300;
+    position: relative;
+    #bell{
+      position: absolute;
+      top: 1.649vh;
+      left: 2.62vh;
+      img{
+        height: 3.22vh;
+      }
+    }
+    #title-text{
+      position: absolute;
+      top: 2.09vh;
+      right: 35.6vw;
+    }
   }
 }
+
 footer{
-  height: 7.34vh;
+  z-index: 102;
   background-color: #40414a;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  .row{
+    margin: 0;
+    padding: 0;
+    .footer-menu{
+      height: 7.34vh;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      img{
+        height: 3.5vh;
+        width: auto;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 0.5vh;
+        margin-bottom: 0.5vh;
+        }
+      p{
+          font-size: 1.4vh;
+          color: white;
+        }
+      .selected{
+        display: none;
+      }
+    }
+    .active{
+      background-color: #35373d;
+      p{
+        color: #ffbb00;
+      }
+      .default{
+        display: none;
+      }
+      .selected{
+        display: block;
+      }
+    }
+  }
 }
-.active{
-  background-color: #35373d;
-}
-.footer-menu{
-  height: 7.34vh;
-}
-.menu-bar{
-  background-color: #ffbc01;
-  height: 7.646vh;
-  width: 100%;
-}
-.blog{
-  margin: 4.79vh 2.99vh 0 2.99vh;
-  border-bottom: solid 1px #d7d7d7;
-}
-.main p{
-  font-size: 24px;
-  color: #333333;
-}
+
