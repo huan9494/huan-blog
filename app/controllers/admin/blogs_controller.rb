@@ -2,6 +2,9 @@ class Admin::BlogsController < ApplicationController
 
   layout 'admin'
   before_action :set_blog, only: [:show, :edit, :destroy, :update]
+  def default_admin_page   
+  end
+  
   def index
     @blogs = Blog.order("id ASC").paginate(page: params[:page], per_page: 20)
     # @blogs = Blog.search("*",order: {id: :asc},page: params[:page], per_page: 20)
@@ -46,6 +49,10 @@ class Admin::BlogsController < ApplicationController
     #   @blogs = search_query("*")
     # end
     
+  end
+  def confirm
+    @blog = Blog.new(blog_params)
+    render "new" if @blog.invalid?
   end
   private
   def set_blog

@@ -4,12 +4,15 @@ class Blog < ApplicationRecord
   #            filterable: [:title, :published, :promoted, :category, :id]
   enum published: [:not_published, :published]
   enum promoted: [:not_promoted, :promoted]
-  validates :title, length: {maximum: 255},
-            presence: {message: "^We need to know who is filling in this form (your name)"}
-  validates :publish, presence: true
-  validates :body, presence: true
-  validates :author_name, presence: true, length: {maximum: 32}
-  validates :author_position, presence: true, length: {maximum: 32}
+  validates :title, length: {maximum: 255, message: "255文字以内で入カしてください。"},
+                    presence: {message: "タイトルを入カしてください。"}
+  validates :publish, presence: {message: "公開日時を設定して下さい。"}
+  validates :body, presence: {message: "名前を入カしてください。"}
+  validates :category, presence: {message: "カテゴリを選択して下さい。"}
+  validates :author_name, length: {maximum: 32, message: "32文字以内で入カしてください。"},
+                          presence: {message: "名前を入カしてください。"}
+  validates :author_position, length: {maximum: 32, message: "32文字以内で入カしてください。"},
+                              presence: {message: "職業を入カしてください。"}
   validates :author_age, presence: true, numericality: {only_integer: true, greater_than: 0, less_than: 100}
 
   has_many :blog_users

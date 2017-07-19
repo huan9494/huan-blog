@@ -1,9 +1,6 @@
 .row{
   margin: 0!important;
 }
-hr{
-  margin: 0!important;
-}
 .menu-bar{
   position:fixed;
   top: 6.528vh;
@@ -26,6 +23,9 @@ hr{
   // overflow-y: auto;
   padding-top: 14.16vh;
   padding-bottom: 10vh;
+  hr{
+    margin: 0!important;
+  }
   ul{
     padding: 0;
     li{
@@ -249,11 +249,12 @@ hr{
               }
             }
             .row-btn-detail{
-              padding-left: 6.8vw;
+              padding: 0 6.8vw;
               .btn-detailed-author{
                 border: solid 1px #4b4b4b;
                 border-radius: 0.464vh;
                 background-color: white;
+                width: 100%;
                 padding: 0;
                 margin-bottom: 3.01vh;
                 .row{
@@ -269,6 +270,7 @@ hr{
                   display: inline-block;
                   float: left;
                   margin-left: 5.466vw;
+                  margin-bottom: 0;
                 }
                 img{
                   width: 2vw!important;

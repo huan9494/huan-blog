@@ -5,10 +5,12 @@ Rails.application.routes.draw do
 
   resources :blogs, only: [:index, :show]
   namespace :admin do
-    root 'blogs#index'
+    root 'blogs#default_admin_page'
+    get 'blogs/default_admin_page'
     resources :blogs do
       collection do
         get :search
+        post :confirm
       end
     end
     resources :categories

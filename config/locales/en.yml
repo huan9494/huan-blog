@@ -23,4 +23,4 @@ en:
   hello: "Hello world"
   errors:
     messages:
-      extension_whitelist_error: "custom errors"
+      extension_whitelist_error: "見出し画像を設定して下さい。 </br> ファイルサイズは２MB以内です。</br> 不正なファイル形式です。"

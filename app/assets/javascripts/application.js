@@ -25,7 +25,8 @@
 $(document).on("turbolinks:load", function(){
   $("#date_field").datetimepicker(
     {
-      locale: 'ja'
+      locale: 'ja',
+      useCurrent: false
     });
 
   $("#preview").on("click", function(ev){

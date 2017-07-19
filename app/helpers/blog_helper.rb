@@ -1,3 +1,4 @@
+require 'date'
 module BlogHelper
   def custom_errors(blog)
     @title_error = ''
@@ -44,5 +45,8 @@ module BlogHelper
   end
   def category_array
     Category.order("created_at ASC").pluck(:name)
+  end
+  def convert_time(datetime)
+    datetime.strftime("%Y年%-m月%-d日 %H:%M")
   end
 end

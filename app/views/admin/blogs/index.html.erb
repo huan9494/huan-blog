@@ -1,20 +1,20 @@
 <div class="row">
   <div class="well">
-    Search filter
+    検索フィルター
     <br>
     <hr>
     <div class="row" style="position: relative;">
       <form action="/admin/blogs/search" data-remote="true">
         <div class="col-sm-2">
           <div class="form-group">
-            Title
+            タイトル
             <input type="text" name="query" id="blog_query" class="form-control">
           </div>
         </div>
         <div class="col-sm-10">
           <div class="col-sm-2">
             <div class="form-group">
-              Category
+              カテゴリ
               <div>
                 <select name="category" id="category_select">
                   <% category_array.each do |e| %>
@@ -26,7 +26,7 @@
           </div>
           <div class="col-sm-2">
             <div class="form-group">
-              Published
+              公開
               <div>
                 <select name="published" id="category_select">
                   <option value="published">published</option>
@@ -37,7 +37,7 @@
           </div>
           <div class="col-sm-2">
             <div class="form-group">
-              Promoted
+              オススメ
               <div>
                 <select name="promoted" id="category_select">
                   <option value="promoted">promoted</option>
@@ -48,7 +48,7 @@
           </div>
           <div class="col-sm-2">
             <div class="form-group">
-              Sort
+              並べ替え
               <div>
                 <select name="sort" id="category_select">
                   <option value="ASC">ASC</option>
@@ -64,7 +64,7 @@
           </div>
           <div class="col-sm-2">
             <div class="form-group">
-              <button type="submit" class="btn btn-default" style="position: absolute; top: 15px; left: 0;">Update</button>
+              <button type="submit" class="btn btn-default" style="position: absolute; top: 15px; left: 0;">更新</button>
             </div>
           </div>
       </form>
@@ -82,21 +82,21 @@
 </div>
 <br>
 <div class="row" id="search_blog" >
-  <%= will_paginate @blogs, remote: true %>
-  <div>
+  <%= will_paginate @blogs, remote: true, :previous_label => '<b> << </b>'.html_safe, :next_label => '<b> >> </b>'.html_safe, inner_window: 1 %>
+  <div> 
     <table class=" table table-strip">
       <thead>
         <tr>
           <th>ID</th>
-          <th>Created_at</th>
-          <th>Title</th>
-          <th>Category</th>
-          <th>Promoted</th>
-          <th>Author</th>
-          <th>Image</th>
-          <th>Published</th>
-          <th>Publish</th>
-          <th>Action</th>
+          <th>作成時間</th>
+          <th>タイトル</th>
+          <th>カテゴリ</th>
+          <th>オススメ</th>
+          <th>作成者</th>
+          <th>サムネイル画像</th>
+          <th>公開 / 非公開</th>
+          <th>公開時間</th>
+          <th>操作</th>
         </tr>
       </thead>
       <tbody id="my-blogs-admin">
@@ -105,6 +105,6 @@
     </table>
   </div>
   <div id="infinite-scrolling-admin" class="col-sm-10 col-sm-offset-1 text-center infinite-scrolling" >
-    <%= will_paginate @blogs, remote: true %>
+    <%= will_paginate @blogs, remote: true, :previous_label => '<b> << </b>'.html_safe, :next_label => '<b> >> </b>'.html_safe, inner_window: 1 %>
   </div>
 </div>

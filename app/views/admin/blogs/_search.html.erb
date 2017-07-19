@@ -3,22 +3,22 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Created_at</th>
-        <th>Title</th>
-        <th>Category</th>
-        <th>Promoted</th>
-        <th>Author</th>
-        <th>Image</th>
-        <th>Published</th>
-        <th>Publish</th>
-        <th>Action</th>
+        <th>作成時間</th>
+        <th>タイトル</th>
+        <th>カテゴリ</th>
+        <th>オススメ</th>
+        <th>作成者</th>
+        <th>サムネイル画像</th>
+        <th>公開 / 非公開</th>
+        <th>公開時間</th>
+        <th>操作</th>
       </tr>
     </thead>
     <tbody id="my-blogs">
       <% @blogs.each do |blog| %>
         <tr>
           <td><%= blog.id %></td>
-          <td><%= blog.created_at %></td>
+          <td><%= convert_time(blog.created_at) %></td>
           <td><%= blog.title %></td>
           <td><%= blog.category%></td>
 
@@ -31,9 +31,9 @@
           <td><%= image_tag blog.image.url, width: 100, height: 100 %></td>
 
           <% if blog.published == "published" %>
-            <td id="published_blog_<%=blog.id%>">ok</td>
+            <td id="published_blog_<%=blog.id%>">公開</td>
           <% else %>
-            <td></td>
+            <td>非公開</td>
           <% end %>
 
           <td>
@@ -42,7 +42,7 @@
               <div class='input-group date datetimepicker_cell' style="display: inline;">
                   <input type='hidden' id="hidden_field_<%=blog.id%>" >
                   <span class="input-group-addon" style="padding: 0; background-color: transparent; border: none; display: inline;">
-                      <span class="btn btn-xs btn-default" >change_date</span>
+                      <span class="btn btn-xs btn-default" >日時変更。</span>
                   </span>
               </div>
                 
@@ -51,7 +51,7 @@
               <% end %>
             </div>
           </td>
-          <td><%= link_to "Edit", edit_admin_blog_path(blog.id), class: "btn btn-default" %></td>
+          <td><%= link_to "記事作成", edit_admin_blog_path(blog.id), class: "btn btn-default" %></td>
         </tr>
       <% end %>
     </tbody>
@@ -61,34 +61,6 @@
     <%= will_paginate @blogs, remote: true %>
   </div>
 <script>
-  // $(".hidden_field").datetimepicker({
-  //   showOn: 'button',
-  //   dateFormat: 'yy-mm-dd',
-  //   buttonText: 'Change_Date',
-  //   onSelect: function(data){
-      
-  //     var a = $(this).parent().attr("blog_id");
-  //     var b = $(this).val();
-  //     $.ajax({
-  //       url: '/admin/blogs/'+a,
-  //       dataType: 'script',
-  //       method: "patch",
-  //       // data: {blog:{publish: toDateReverse(toDate(b))}},
-  //       success: function(){
-  //         $("#publish_time_"+a).html(b);
-  //       }
-  //     });
-  //   }
-  // }).next(".ui-datepicker-trigger").addClass("btn btn-xs btn-default");
-
-  // // function toDate(dateStr) {
-  // //   return $.datepicker.parseDate("yy-mm-dd", dateStr);
-  // // };
-
-  // // function toDateReverse(dateStr) {
-  // //   var a = $.datepicker.parseDate("D M dd yy", dateStr);
-  // //   return $.datepicker.formatDate('yy-mm-dd', a)
-  // // };
   $('.datetimepicker_cell').datetimepicker({
     locale: 'ja',
     useCurrent: false

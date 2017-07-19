@@ -4,6 +4,6 @@
     <%= render 'blog' %>
   </ul>
   <div id="infinite-scrolling-user" class="text-center">
-    <%= will_paginate(@blogs) %>
+    <%= will_paginate @blogs, remote: true, :previous_label => '<b> << </b>'.html_safe, :next_label => '<b> >> </b>'.html_safe, inner_window: 1 %>
   </div>
 </div>
