@@ -30,7 +30,7 @@
         </div>
 
         <% if blog.published == "published" %>
-          <div class="btn btn-xs btn-danger published_button" id="published_button_<%=blog.id%>" >unpublished</div>
+          <div class="btn btn-xs btn-danger published_button" id="published_button_<%=blog.id%>" >停止</div>
         <% end %>
       </div>
     </td>
@@ -38,41 +38,3 @@
   </tr>
 <% end %>
 
-<script>
-
-  $('.datetimepicker_cell').datetimepicker({
-    locale: 'ja',
-    useCurrent: false
-  });
-
-
-$('.datetimepicker_cell').on('dp.change', function(data){
-    var a = $(this).parent().attr("blog_id");
-    $(".bootstrap-datetimepicker-widget").hide();
-    $.ajax({
-      url: '/admin/blogs/'+a,
-      dataType: 'script',
-      method: "patch",
-      data: {redirect_check: 1, blog:{publish: data.date.format("Y-MM-D hh:mm") }},
-      success: function(){
-        $("#publish_time_"+a).html(data.date.format("Y-MM-D hh:mm"));
-        
-      }
-    });
-  });
-
-    $(".published_button").on("click", function(){
-      var a = $(this).parent().attr("blog_id");
-      $.ajax({
-        url: '/admin/blogs/'+a,
-        dataType: 'script',
-        method: 'patch',
-        data: {redirect_check: 1, blog:{published: "not_published"}},
-        success: function(){
-          $("#published_blog_" + a).html("");
-          $("#published_button_" + a).hide();
-        }
-      });
-    });
-
-</script>

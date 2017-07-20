@@ -42,12 +42,12 @@
               <div class='input-group date datetimepicker_cell' style="display: inline;">
                   <input type='hidden' id="hidden_field_<%=blog.id%>" >
                   <span class="input-group-addon" style="padding: 0; background-color: transparent; border: none; display: inline;">
-                      <span class="btn btn-xs btn-default" >日時変更。</span>
+                      <span class="btn btn-xs btn-default" >日時変更</span>
                   </span>
               </div>
                 
               <% if blog.published == "published" %>
-                <span class="btn btn-xs btn-danger published_button" id="published_button_<%=blog.id%>" >unpublished</span>
+                <span class="btn btn-xs btn-danger published_button" id="published_button_<%=blog.id%>" >停止</span>
               <% end %>
             </div>
           </td>
@@ -58,41 +58,9 @@
   </table>
 </div>
 <div id="infinite-scrolling" class="col-sm-10 col-sm-offset-1 text-center" >
-    <%= will_paginate @blogs, remote: true %>
+    <%= will_paginate @blogs, remote: true, :previous_label => '<b> << </b>'.html_safe, :next_label => '<b> >> </b>'.html_safe, inner_window: 1 %>
   </div>
 <script>
-  $('.datetimepicker_cell').datetimepicker({
-    locale: 'ja',
-    useCurrent: false
-  });
 
-
-$('.datetimepicker_cell').on('dp.change', function(data){
-    var a = $(this).parent().attr("blog_id");
-    $(".bootstrap-datetimepicker-widget").hide();
-    $.ajax({
-      url: '/admin/blogs/'+a,
-      dataType: 'script',
-      method: "patch",
-      data: {redirect_check: 1, blog:{publish: data.date.format("Y-MM-D hh:mm") }},
-      success: function(){
-        $("#publish_time_"+a).html(data.date.format("Y-MM-D hh:mm"));
-        
-      }
-    });
-  });
-  $(".published_button").on("click", function(){
-      var a = $(this).parent().attr("blog_id");
-      $.ajax({
-        url: '/admin/blogs/'+a,
-        dataType: 'script',
-        method: 'patch',
-        data: {blog:{published: "not_published"}},
-        success: function(){
-          $("#published_blog_" + a).html("");
-          $("#published_button_" + a).hide();
-        }
-      });
-    });
   
 </script>

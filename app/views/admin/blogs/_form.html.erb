@@ -190,35 +190,4 @@
 </div>
 <script>
   CKEDITOR.replace('body_text');
-  var CKEDITOR_BASEPATH = '/assets/ckeditor/';
-
-  $(function() {
-      var imagesPreview = function(input, placeToInsertImagePreview) {
-
-          if (input.files) {
-              var filesAmount = input.files.length;
-
-              for (i = 0; i < filesAmount; i++) {
-                  var reader = new FileReader();
-
-                  reader.onload = function(event) {
-                      $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
-                  }
-
-                  reader.readAsDataURL(input.files[i]);
-              }
-          }
-
-      };
-
-      $('#blog_image').on('change', function() {
-          $('div.gallery').empty();
-          imagesPreview(this, 'div.gallery');
-      });
-      $('#author_avatar_image').on('change', function() {
-          $('div.author_avatar_gallery').empty();
-          imagesPreview(this, 'div.author_avatar_gallery');
-      });
-  });
-
 </script>

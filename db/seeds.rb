@@ -35,8 +35,8 @@ blog_arr3 = []
 
 end
 Blog.import blog_arr3, validate: false
-Blog.search_index.clean_indices
-Blog.reindex(async: true)
+# Blog.search_index.clean_indices
+# Blog.reindex(async: true)
 
 Category.create(name: "category 1")
 Category.create(name: "category 2")

@@ -1,20 +1,22 @@
 <div class="view-detail">
   <div class="row">
-    <div class="promoted">
-      <img src="/assets/promoted.png" alt="">
-    </div>
+    <% if @blog.promoted.eql?("promoted") %>
+      <div class="promoted">
+        <img src="/assets/promoted.png" alt="">
+      </div>
+    <% end %>
     <div class="blog">
       <div class="short-content">
-        <p>記事タイトルが入ります。記事タイトルが入ります。記事タイトルが入ります。記事タイトルが入ります。</p>
+        <p><%= @blog.title %></p>
       </div>
       <hr>
       <div class="row">
         <div class="col-xs-6">
           <div class="category">
-            <p>カテゴリー</p>
+            <p><%= @blog.category %></p>
           </div>
           <div class="publish-time">
-            <p>2017.04.01</p>
+            <p><%= @blog.publish.to_date %></p>
           </div>
         </div>
         <div class="col-xs-6">
@@ -55,34 +57,22 @@
       </div>
       <div class="row">
         <div class="content">
-          <img src="/assets/detail-image" alt="">
+          <img src=<%= @blog.image.url %> alt="">
           <p>
-            この文章はダミーテキストです、文字などを調整するために入れています。この文章はダミーテキストです、文字などを調整するために入れ
-          </p>
-          <p>
-            ダミーテキスト、中見出しが入ります。ダミーテキスト、中見出しが入ります。
-          </p>
-          <p>
-            この文章はダミーテキストです、文字などを調整するために入れています。この文章はダミーテキストです、文字などを調整するために入れ
-          </p>
-          <p>
-            ・テキストリンクテキストリンク ・テキストリンクテキストリンク ・テキストリンクテキストリンク 
-          </p>
-          <p>
-            この文章はダミーテキストです、文字などを調整するために入れています。この文章はダミーテキストです、文字などを調整するために入れ
+           <%= @blog.body.html_safe %>
           </p>
         </div>
       </div>
       <div class="row">
         <div class="author">
           <div class="row-image-info">
-            <img src="/assets/author-image" alt="">
+            <img src=<%= @blog.author_avatar.url %> alt="">
             <div class="author-info">
               <p>この記事を書いた人</p>
               <div class="author-name">
-                <p>ナルフォード先生</p>
+                <p><%= @blog.author_name %></p>
               </div>
-              <p>塾講師 / 26歳</p>
+              <p><%= @blog.author_position %> / <%= @blog.author_age %>歳</p>
             </div>
           </div>
           <div class="row-btn-detail">
@@ -96,17 +86,17 @@
         </div>
       </div>
     </div>
-    <div class="review">
+    <div class="review" >
       <p class="review-title">参考になったかな？</p>
-      <div class="row upper">
-        <div class="col-xs-6 left review-button review-active">
+      <div class="row upper" >
+        <div class="col-xs-6 left review-button " action="biglike" id="biglike">
           <img src="/assets/review-frame.png" alt="" class="review-frame">
           <img src="/assets/biglike.png" alt="" class="icon">
           <img src="/assets/review-white-frame.png" alt="" class="review-white-frame">
           <img src="/assets/tick.png" alt="" class="tick">
           <p>なるほど</p>
         </div>
-        <div class="col-xs-6 review-button right">
+        <div class="col-xs-6 review-button right" action="like" id="like">
           <img src="/assets/review-frame.png" alt="" class="review-frame">
           <img src="/assets/like.png" alt="" class="icon">
           <img src="/assets/review-white-frame.png" alt="" class="review-white-frame">
@@ -114,15 +104,15 @@
           <p>おもしろい</p>
         </div>
       </div>
-      <div class="row lower">
-        <div class="col-xs-6 review-button left">
+      <div class="row lower" >
+        <div class="col-xs-6 review-button left" action="dislike" id="dislike">
           <img src="/assets/review-frame.png" alt="" class="review-frame">
           <img src="/assets/dislike.png" alt="" class="icon">
           <img src="/assets/review-white-frame.png" alt="" class="review-white-frame">
           <img src="/assets/tick.png" alt="" class="tick">
           <p>難しい</p>
         </div>
-        <div class="col-xs-6 review-button right">
+        <div class="col-xs-6 review-button right" action="bigdislike" id="bigdislike">
           <img src="/assets/review-frame.png" alt="" class="review-frame">
           <img src="/assets/bigdislike.png" alt="" class="icon">
           <img src="/assets/review-white-frame.png" alt="" class="review-white-frame">
@@ -134,10 +124,22 @@
 
     <div class="row comment">
         <p>ご意見・ご感想をお聞かせください</p>
-        <div class="text-area">
-          <textarea placeholder="投稿内容を入力してください"></textarea> 
-          <button>送信する</button>
+        <div class="text-area" >
+            <% if @blog.comments %>
+              <div id="comment_sentences">
+                <% @blog.comments.order(:created_at).each do |comment| %>
+                  <p><i><%= comment.body %></i></p>
+                <% end %>
+              </div>
+            <% end %>
+            <br>
+            <%= form_for Comment.new, method: :post, remote: true do |f| %>
+              <%= f.text_area :body, placeholder: "投稿内容を入力してください" %>
+              <%= f.hidden_field :blog_id, value: @blog.id %>
+              <%= button_tag "送信する" %>
+            <% end %>
         </div>
+
     </div>
     <div class="social-bottom">
       <div class="title-social">
@@ -162,3 +164,34 @@
     </div>
   </div>
 </div>
+
+<script>
+var check_user_action = "<%= check_action(current_user.id, @blog.id) %>"
+  <% if current_user && check_action(current_user.id, @blog.id) %>
+    $(".review-button").removeClass("review-active");
+    $("#"+ check_user_action).addClass("review-active");
+  <% end %>
+  $(".review-button").on("click", function(){
+    var get_action = $(this).attr("action");
+    $(".review-button").removeClass("review-active");
+    $(this).addClass("review-active");
+    <% if current_user %>
+      $.ajax({
+        url: "/blogusers/update",
+        dataType: "script",
+        method: "patch",
+        data: {user_id: <%= current_user.id %>, blog_id: <%= @blog.id %>, user_action: get_action },
+        
+      });
+    <% else %>
+      alert("You need to login before this action!");
+      window.location.replace("/users/sign_in");
+    <% end %>
+  });
+
+  $(".comment textarea").on("focus", function(){
+    <% unless current_user %>
+      window.location.replace("/users/sign_in");
+    <% end %>
+  });
+</script>

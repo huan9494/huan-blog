@@ -49,4 +49,10 @@ module BlogHelper
   def convert_time(datetime)
     datetime.strftime("%Y年%-m月%-d日 %H:%M")
   end
+
+  def check_action(current_user_id, blog_id)
+    if BlogUser.where(user_id: current_user_id, blog_id: blog_id).first.action
+      BlogUser.where(user_id: current_user_id, blog_id: blog_id).first.action
+    end
+  end
 end

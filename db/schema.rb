@@ -13,7 +13,7 @@
 ActiveRecord::Schema.define(version: 20170713014525) do
 
   create_table "blog_users", force: :cascade do |t|
-    t.integer  "action"
+    t.integer  "action",            default: 0
     t.integer  "user_id"
     t.integer  "blog_id"
     t.datetime "created_at", null: false

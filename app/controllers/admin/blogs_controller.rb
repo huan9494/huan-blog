@@ -21,6 +21,7 @@ class Admin::BlogsController < ApplicationController
   def create
     @blog = Blog.new(blog_params)
     if @blog.save
+      flash[:notice] = "Create successfully!"
       redirect_to admin_root_path
     else
       render 'new'
@@ -30,12 +31,14 @@ class Admin::BlogsController < ApplicationController
   end
   def update
     if @blog.update(blog_params)
-      redirect_to admin_root_path unless params[:redirect_check]
+      flash[:notice] = "Update successfully!"
+      redirect_to admin_blogs_path unless params[:redirect_check]
     else
       render 'edit'
     end
   end
   def destroy
+    flash[:notice] = "Destroy successfully!"
     redirect_to admin_root_path
   end
   def search

@@ -64,10 +64,5 @@ $(document).on("turbolinks:load", function(){
     $(".footer-menu").removeClass("active");
     $(this).addClass("active");
   });
-  $(".review-button").on("click", function(){
-    $(".review-button").removeClass("review-active");
-    $(this).addClass("review-active");
-  });
-
 
 });

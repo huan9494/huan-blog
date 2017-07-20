@@ -1,6 +1,6 @@
 $('#my-blogs-admin').append('<%= j render "blog" %>');
 <% if @blogs.next_page %>
-  $('.pagination').replaceWith('<%= j will_paginate @blogs %>');
+  $('.pagination').replaceWith("<%= j will_paginate @blogs, remote: true, :previous_label => '<b> << </b>'.html_safe, :next_label => '<b> >> </b>'.html_safe, inner_window: 1 %>");
 <% else %>
   $(window).off('scroll');
   $('.pagination').remove();

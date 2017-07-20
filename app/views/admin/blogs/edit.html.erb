@@ -9,7 +9,7 @@
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label :title, class: "form-title pull-right" %>
+            <%= f.label "タイトル", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-10">
             <%= f.text_field :title, autofocus: true, class: 'form-control' %>
@@ -23,7 +23,7 @@
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label :category, class: "form-title pull-right" %>
+            <%= f.label "力テゴリ", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-10">
             <%= f.select :category, options_for_select(category_array),class: 'form-control' %>
@@ -37,7 +37,7 @@
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label :publish, class: "form-title pull-right" %>
+            <%= f.label "公開日時", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-5">
             <%= f.text_field :publish, class: 'form-control', id: "date_field" %>
@@ -51,7 +51,7 @@
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label :published, class: "form-title pull-right" %>
+            <%= f.label "公開設定", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-10">
             <%= f.check_box(:published, {}, "published", "not_published") %>
@@ -62,7 +62,7 @@
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label :promoted, class: "form-title pull-right" %>
+            <%= f.label "オ又又メ", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-10">
             <%= f.check_box(:promoted, {}, "promoted", "not_promoted") %>
@@ -73,7 +73,7 @@
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label :image, class: "form-title pull-right" %>
+            <%= f.label "見出し画傷", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-3">
             <div class="gallery">
@@ -82,7 +82,7 @@
             <!-- <label class="btn btn-primary" for="my-file-selector"> -->
             <label class="btn btn-default btn-sm" for="blog_image">
               <%= f.file_field :image, style: "display: none;", id: "blog_image" %>
-              Open
+              闔く
             </label>
 
             <% if @image_error.length > 0 %>
@@ -95,10 +95,10 @@
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label :body, class: "form-title pull-right" %>
+            <%= f.label "本文", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-10">
-            <div id="preview"><%= link_to "<b>Preview</b>".html_safe, "#" %></div>
+            <div id="preview"><%= link_to "プレビュー", "#" %></div>
             <br>
             <% if @body_error.length > 0 %>
               <div class="alert alert-danger"><%= @body_error %></div>
@@ -110,10 +110,11 @@
         </div>
       </div>
       <br>
+      <h4>投稿者設定</h4>
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label :author_name, class: "form-title pull-right" %>
+            <%= f.label "名前", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-5">
             <%= f.text_field :author_name, class: "form-control" %>
@@ -127,7 +128,7 @@
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label :author_position, class: "form-title pull-right" %>
+            <%= f.label "職業", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-5">
             <%= f.text_field :author_position, class: "form-control" %>
@@ -141,7 +142,7 @@
       <div class="row">
         <div class="form-group" data-no-turbolink>
           <div class="col-sm-2">
-            <%= f.label :author_age, class: "form-title pull-right" %>
+            <%= f.label "年齢", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-3">
             <%= f.text_field :author_age, type: "number", class: "form-control" %>
@@ -155,7 +156,7 @@
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label :author_avatar, class: "form-title pull-right" %>
+            <%= f.label "画傷", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-3">
             <div class="author_avatar_gallery">
@@ -163,7 +164,7 @@
             </div>
             <label class="btn btn-default btn-sm" for="author_avatar_image">
               <%= f.file_field :author_avatar, style: "display: none;", id: "author_avatar_image" %>
-              Open
+              闔く
             </label>
             
             <% if @author_avatar_error.length > 0 %>
@@ -176,10 +177,10 @@
       <div class="row">
         <div class="form-group col-sm-2 col-sm-offset-5">
           <div class="col-sm-6">
-            <%= link_to "List", admin_root_path, class: "btn btn-default" %>
+            <%= link_to "List", admin_blogs_path, class: "btn btn-default" %>
           </div>
           <div class="col-sm-6">
-            <%= f.button "Update", class: "btn btn-primary" %>
+            <%= f.button "更新", class: "btn btn-primary" %>
           </div>
         </div>
       </div>
@@ -188,35 +189,4 @@
 </div>
 <script>
   CKEDITOR.replace('body_text');
-  var CKEDITOR_BASEPATH = '/assets/ckeditor/';
-
-  $(function() {
-      var imagesPreview = function(input, placeToInsertImagePreview) {
-
-          if (input.files) {
-              var filesAmount = input.files.length;
-
-              for (i = 0; i < filesAmount; i++) {
-                  var reader = new FileReader();
-
-                  reader.onload = function(event) {
-                      $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
-                  }
-
-                  reader.readAsDataURL(input.files[i]);
-              }
-          }
-
-      };
-
-      $('#blog_image').on('change', function() {
-          $('div.gallery').empty();
-          imagesPreview(this, 'div.gallery');
-      });
-      $('#author_avatar_image').on('change', function() {
-          $('div.author_avatar_gallery').empty();
-          imagesPreview(this, 'div.author_avatar_gallery');
-      });
-  });
-
 </script>

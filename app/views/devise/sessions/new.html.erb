@@ -1,8 +1,5 @@
-<div class="panel panel-default devise-bs">
-  <div class="panel-heading">
-    <h4><%= t('.sign_in', default: 'Sign in') %></h4>
-  </div>
-  <div class="panel-body">
+<div class="panel panel-default devise-bs" style="padding-top: 10vh;">
+  <div class="col-md-6 col-md-offset-3 col-xs-12 panel-body">
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: 'form' }) do |f| %>
       <div class="form-group">
         <%= f.label :email %>
@@ -21,6 +18,7 @@
       <% end %>
       <%= f.submit  t('.sign_in', default: 'Sign in'), class: 'btn btn-primary' %>
     <% end %>
+    <br>
+  <%= render 'devise/shared/links' %>
   </div>
 </div>
-<%= render 'devise/shared/links' %>
