@@ -28,6 +28,7 @@
               カテゴリ
               <div>
                 <select name="category" id="category_select">
+                  <option selected hidden></option>
                   <% category_array.each do |e| %>
                     <option value="<%= e %>"><%= e %></option>
                   <% end %>
@@ -40,6 +41,7 @@
               公開
               <div>
                 <select name="published" id="category_select">
+                  <option selected hidden></option>
                   <option value="published">published</option>
                   <option value="not_published">not_published</option>
                 </select>
@@ -51,6 +53,7 @@
               オススメ
               <div>
                 <select name="promoted" id="category_select">
+                  <option selected hidden></option>
                   <option value="promoted">promoted</option>
                   <option value="not_promoted">not_promoted</option>
                 </select>
@@ -62,6 +65,7 @@
               並べ替え
               <div>
                 <select name="sort" id="category_select">
+                  <option selected hidden></option>
                   <option value="ASC">ASC</option>
                   <option value="DESC">DESC</option>
                 </select>

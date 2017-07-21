@@ -43,9 +43,9 @@ class Admin::BlogsController < ApplicationController
   end
   def search
     sort = Blog.sort_funct(params[:sort])
-    @blogs = Blog.find_excute(params[:category], params[:published],
-                              params[:promoted], params[:query], sort).
-                              paginate(page: params[:page], per_page: 20)
+    @blog_search = Blog.find_excute(params[:category], params[:published],
+                                    params[:promoted], params[:query], sort).
+                                    paginate(page: params[:page], per_page: 20)
     # if params[:query].length > 0
     #   @blogs = search_query(params[:query])
     # else

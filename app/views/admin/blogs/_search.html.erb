@@ -15,7 +15,7 @@
       </tr>
     </thead>
     <tbody id="my-blogs">
-      <% @blogs.each do |blog| %>
+      <% @blog_search.each do |blog| %>
         <tr>
           <td><%= blog.id %></td>
           <td><%= convert_time(blog.created_at) %></td>
@@ -58,7 +58,7 @@
   </table>
 </div>
 <div id="infinite-scrolling" class="col-sm-10 col-sm-offset-1 text-center" >
-    <%= will_paginate @blogs, remote: true, :previous_label => '<b> << </b>'.html_safe, :next_label => '<b> >> </b>'.html_safe, inner_window: 1 %>
+    <%= will_paginate @blog_search, remote: true, :previous_label => '<b> << </b>'.html_safe, :next_label => '<b> >> </b>'.html_safe, inner_window: 1 %>
   </div>
 <script>
 

@@ -38,17 +38,7 @@ $(document).on("turbolinks:load", function(){
     });
     ev.preventDefault();
   });
-
-  if ($('#infinite-scrolling-admin').size() > 0) {
-    $(window).on("scroll", function(){
-      var more_blogs_url = $('.pagination .next_page a').attr('href');
-      if (more_blogs_url && $(window).scrollTop() > $(document).height() - $(window).height() - 60) {
-        $('.pagination').html('<i class="fa fa-spinner fa-spin" style="font-size:40px; color: black;"></i>');
-        $.getScript(more_blogs_url);
-      }
-      
-    });
-  }
+  
   if ($('#infinite-scrolling-user').size() > 0) {
     $(window).on("scroll", function(){
       var more_blogs_user = $('.pagination .next_page a').attr('href');

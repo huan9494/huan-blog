@@ -7,6 +7,17 @@ class BlogsController < ApplicationController
   end
   def show
     @blog = Blog.find(params[:id])
+
+    if current_user
+      @action = BlogUser.where(user_id: current_user.id, blog_id: @blog.id).first
+      if @action
+        @check_action = @action.action
+      end
+    end
+
+    @count_action = BlogUser.where(blog_id: @blog.id).select(:action).group(:action).count
+    
+    @blog_comments = @blog.comments.order("created_at ASC")
   end
 
   private

@@ -50,9 +50,33 @@ module BlogHelper
     datetime.strftime("%Y年%-m月%-d日 %H:%M")
   end
 
-  def check_action(current_user_id, blog_id)
-    if BlogUser.where(user_id: current_user_id, blog_id: blog_id).first.action
-      BlogUser.where(user_id: current_user_id, blog_id: blog_id).first.action
+  def biglikes_count(count_action)
+    if @count_action["biglike"]
+      @biglikes_count = count_action["biglike"]
+    else
+      @biglikes_count = 0
     end
   end
+  def likes_count(count_action)
+    if @count_action["like"]
+      @likes_count = count_action["biglike"]
+    else
+      @likes_count = 0
+    end
+  end
+  def dislikes_count(count_action)
+    if @count_action["dislike"]
+      @dislikes_count = @count_action["dislike"]
+    else
+      @dislikes_count = 0
+    end
+  end
+  def bigdislikes_count(count_action)
+    if @count_action["bigdislike"]
+      @bigdislikes_count = @count_action["bigdislike"]
+    else
+      @bigdislikes_count = 0
+    end
+  end
+
 end
