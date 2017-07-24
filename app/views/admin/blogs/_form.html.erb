@@ -1,17 +1,26 @@
 <div class="panel-body">
   <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog" id="modal_content" style="padding: 10px;">
-
+    <div class="modal-dialog" style="padding: 10px;">
+      <div class="panel panel-default" id="modal_content" style="position: relative">
+        <div class="panel-heading" style="position: fixed; top: 0; left: 0; width: 100%;" >
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4><%= t('preview') %></h4>
+        </div>
+        <div class="panel-body" id="modal_content_body" style="padding-top: 20px;">
+          
+        </div>
+      </div>
     </div>
+    
   </div>
-  <h2>ブログ記事作成</h2>
+  <h2><%= t('creat_post') %></h2>
 
     <%= form_for [:admin, @blog], url: {action: 'confirm'} do |f| %>
       <% custom_errors(@blog) %>
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label "タイトル", class: "form-title pull-right" %>
+            <%= f.label "#{t('title')}", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-10">
             <%= f.text_field :title, autofocus: true, class: 'form-control' %>
@@ -25,7 +34,7 @@
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label "力テゴリ", class: "form-title pull-right" %>
+            <%= f.label "#{t('category')}", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-10">
             <%= f.select :category, options_for_select(category_array),class: 'form-control' %>
@@ -39,7 +48,7 @@
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label "公開日時", class: "form-title pull-right" %>
+            <%= f.label "#{t('release_date')}", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-5">
             <%= f.text_field :publish, class: 'form-control', id: "date_field" %>
@@ -53,10 +62,10 @@
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label "公開設定", class: "form-title pull-right" %>
+            <%= f.label "#{t('publishing_settings')}", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-10">
-            <%= f.check_box(:published, {}, "published", "not_published") %> 公開する 
+            <%= f.check_box(:published, {}, "published", "not_published") %> <%= t('publish') %>
           </div>
         </div>
       </div>
@@ -64,10 +73,10 @@
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label "オ又又メ", class: "form-title pull-right" %>
+            <%= f.label "#{t('promoted')}", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-10">
-            <%= f.check_box(:promoted, {}, "promoted", "not_promoted") %> オ又又メに設定する
+            <%= f.check_box(:promoted, {}, "promoted", "not_promoted") %> <%= t('set_promoted') %>
           </div>
         </div>
       </div>
@@ -75,15 +84,20 @@
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label "見出し画傷", class: "form-title pull-right" %>
+            <%= f.label "#{t('headline_thumb')}", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-3">
             <div class="gallery">
-              <img src="/assets/author_avatar" alt="image">
+              <% if @blog.image? %>
+                <%= image_tag(@blog.image_url) %>
+              <% else %>
+                <img src="/assets/author_avatar" alt="image">
+              <% end %>
             </div>
             <label class="btn btn-default btn-sm" for="blog_image">
               <%= f.file_field :image, style: "display: none;", id: "blog_image" %>
-              闔く
+              <%= f.hidden_field :image_cache %>
+              <%= t('open') %>
             </label>
 
             <% if @image_error.length > 0 %>
@@ -96,10 +110,10 @@
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label "本文", class: "form-title pull-right" %>
+            <%= f.label "#{t('body')}", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-10">
-            <div id="preview"><%= link_to "プレビュー".html_safe, "#" %></div>
+            <div id="preview"><%= link_to "#{t('preview')}".html_safe, "#" %></div>
             <br>
             <% if @body_error.length > 0 %>
               <div class="error"><%= @body_error %></div>
@@ -111,11 +125,11 @@
         </div>
       </div>
       <br>
-      <h4>投稿者設定</h4>
+      <h4><%= t('poster_settings') %></h4>
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label "名前", class: "form-title pull-right" %>
+            <%= f.label "#{t('author_name')}", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-5">
             <%= f.text_field :author_name, class: "form-control" %>
@@ -129,7 +143,7 @@
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label "職業", class: "form-title pull-right" %>
+            <%= f.label "#{t('author_position')}", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-5">
             <%= f.text_field :author_position, class: "form-control" %>
@@ -143,7 +157,7 @@
       <div class="row">
         <div class="form-group" data-no-turbolink>
           <div class="col-sm-2">
-            <%= f.label "年齢", class: "form-title pull-right" %>
+            <%= f.label "#{t('author_age')}", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-3">
             <%= f.text_field :author_age, type: "number", class: "form-control" %>
@@ -157,15 +171,20 @@
       <div class="row">
         <div class="form-group">
           <div class="col-sm-2">
-            <%= f.label "画傷", class: "form-title pull-right" %>
+            <%= f.label "#{t('author_avatar')}", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-3">
             <div class="author_avatar_gallery">
-              <img src="/assets/author_avatar" alt="image">
+              <% if @blog.author_avatar? %>
+                <%= image_tag(@blog.author_avatar_url) %>
+              <% else %>
+                <img src="/assets/author_avatar" alt="image">
+              <% end %>
             </div>
             <label class="btn btn-default btn-sm" for="author_avatar_image">
               <%= f.file_field :author_avatar, style: "display: none;", id: "author_avatar_image" %>
-              闔く
+              <%= f.hidden_field :author_avatar_cache %>
+              <%= t('open') %>
             </label>
             
             <% if @author_avatar_error.length > 0 %>
@@ -178,10 +197,10 @@
       <div class="row">
         <div class="form-group col-sm-2 col-sm-offset-5">
           <div class="col-sm-6">
-            <%= link_to "List", admin_blogs_path, class: "btn btn-default" %>
+            <%= link_to "#{t('list')}", admin_blogs_path, class: "btn btn-default" %>
           </div>
           <div class="col-sm-6">
-            <%= f.button "Confirm", class: "btn btn-primary" %>
+            <%= f.button "#{t('confirm')}", class: "btn btn-primary" %>
           </div>
         </div>
       </div>

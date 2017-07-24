@@ -1,6 +1,14 @@
 class BlogusersController < ApplicationController
-  def update
+  def create
     blog_user = BlogUser.where(user_id: params[:user_id], blog_id: params[:blog_id]).first
-    blog_user.update(action: params[:user_action])
+    if blog_user
+      blog_user.update(action: params[:user_action])
+      UpdateactionJob.set(wait: 3.seconds).perform_later(params[:blog_id])
+    else
+      BlogUser.create(user_id: params[:user_id], blog_id: params[:blog_id],
+                                  action: params[:user_action])
+      UpdateactionJob.set(wait: 3.seconds).perform_later(params[:blog_id])
+    end  
   end
+
 end

@@ -26,12 +26,13 @@ $(document).on("turbolinks:load", function(){
   $("#date_field").datetimepicker(
     {
       locale: 'ja',
-      useCurrent: false
+      useCurrent: false,
+      format: 'Y-MM-D hh:mm'
     });
 
   $("#preview").on("click", function(ev){
     var content = CKEDITOR.instances['body_text'].getData();
-    $("#modal_content").html(content);
+    $("#modal_content_body").html(content);
     $("#myModal").modal();
     $('#myModal').on('hidden.bs.modal', function(){
       $("video").each(function () { this.pause() });
@@ -55,4 +56,7 @@ $(document).on("turbolinks:load", function(){
     $(this).addClass("active");
   });
 
+  $("#back_button").on("click", function(){
+    window.history.back();
+  });
 });

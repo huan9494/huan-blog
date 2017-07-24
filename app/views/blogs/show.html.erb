@@ -128,7 +128,9 @@
             <% if @blog_comments %>
               <div id="comment_sentences">
                 <% @blog_comments.order(:created_at).each do |comment| %>
-                  <p><i><%= comment.body %></i></p>
+                  <div>
+                    <b><%= comment.user.name %></b>: <p style="display: inline-block;"><i><%= comment.body %></i></p>
+                  </div>
                 <% end %>
               </div>
             <% end %>
@@ -136,8 +138,11 @@
             <%= form_for Comment.new, method: :post, remote: true do |f| %>
               <%= f.text_area :body, placeholder: "投稿内容を入力してください" %>
               <%= f.hidden_field :blog_id, value: @blog.id %>
-              <%= button_tag "送信する" %>
+              <% if current_user %>
+                <%= f.hidden_field :user_id, value: current_user.id %>
+              <% end %>
             <% end %>
+            <%= button_tag "送信する", id: "btn_comment" %>
         </div>
 
     </div>
@@ -177,9 +182,9 @@ var check_user_action = "<%= @check_action %>"
     $(this).addClass("review-active");
     <% if current_user %>
       $.ajax({
-        url: "/blogusers/update",
+        url: "/blogusers/create",
         dataType: "script",
-        method: "patch",
+        method: "post",
         data: {user_id: <%= current_user.id %>, blog_id: <%= @blog.id %>, user_action: get_action },
         
       });

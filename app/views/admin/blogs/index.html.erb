@@ -11,24 +11,24 @@
 <br>
 <div class="row">
   <div class="well">
-    検索フィルター
+    <%= t('search_filter') %>
     <br>
     <hr>
     <div class="row" style="position: relative;">
-      <form action="/admin/blogs/search" data-remote="true">
+      <form action="/admin/blogs" >
         <div class="col-sm-2">
           <div class="form-group">
-            タイトル
+            <%= t('title') %>
             <input type="text" name="query" id="blog_query" class="form-control">
           </div>
         </div>
         <div class="col-sm-10">
           <div class="col-sm-2">
             <div class="form-group">
-              カテゴリ
+              <%= t('category') %>
               <div>
                 <select name="category" id="category_select">
-                  <option selected hidden></option>
+                  <option selected></option>
                   <% category_array.each do |e| %>
                     <option value="<%= e %>"><%= e %></option>
                   <% end %>
@@ -38,34 +38,34 @@
           </div>
           <div class="col-sm-2">
             <div class="form-group">
-              公開
+              <%= t('published') %>
               <div>
                 <select name="published" id="category_select">
-                  <option selected hidden></option>
-                  <option value="published">published</option>
-                  <option value="not_published">not_published</option>
+                  <option selected></option>
+                  <option value="1">published</option>
+                  <option value="0">not_published</option>
                 </select>
               </div>
             </div>
           </div>
           <div class="col-sm-2">
             <div class="form-group">
-              オススメ
+              <%= t('promoted') %>
               <div>
                 <select name="promoted" id="category_select">
-                  <option selected hidden></option>
-                  <option value="promoted">promoted</option>
-                  <option value="not_promoted">not_promoted</option>
+                  <option selected></option>
+                  <option value="1">promoted</option>
+                  <option value="0">not_promoted</option>
                 </select>
               </div>
             </div>
           </div>
           <div class="col-sm-2">
             <div class="form-group">
-              並べ替え
+              <%= t('sort') %>
               <div>
                 <select name="sort" id="category_select">
-                  <option selected hidden></option>
+                  <option selected></option>
                   <option value="ASC">ASC</option>
                   <option value="DESC">DESC</option>
                 </select>
@@ -79,7 +79,7 @@
           </div>
           <div class="col-sm-2">
             <div class="form-group">
-              <button type="submit" class="btn btn-default" style="position: absolute; top: 15px; left: 0;">更新</button>
+              <button type="submit" class="btn btn-default" style="position: absolute; top: 15px; left: 0;"><%= t('btn_search') %></button>
             </div>
           </div>
       </form>
@@ -99,19 +99,19 @@
 <div class="row" id="search_blog" >
   <%= will_paginate @blogs, remote: true, :previous_label => '<b> << </b>'.html_safe, :next_label => '<b> >> </b>'.html_safe, inner_window: 1 %>
   <div> 
-    <table class=" table table-strip">
+    <table class=" table table-strip" id="table_index">
       <thead>
         <tr>
           <th>ID</th>
-          <th>作成時間</th>
-          <th>タイトル</th>
-          <th>カテゴリ</th>
-          <th>オススメ</th>
-          <th>作成者</th>
-          <th>サムネイル画像</th>
-          <th>公開 / 非公開</th>
-          <th>公開時間</th>
-          <th>操作</th>
+          <th><%= t('created_at') %></th>
+          <th><%= t('title') %></th>
+          <th><%= t('category') %></th>
+          <th><%= t('promoted') %></th>
+          <th><%= t('author') %></th>
+          <th><%= t('author_avatar') %></th>
+          <th><%= t('published_not_published') %></th>
+          <th><%= t('open_time') %></th>
+          <th><%= t('action') %></th>
         </tr>
       </thead>
       <tbody id="my-blogs-admin">

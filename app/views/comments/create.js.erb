@@ -1,2 +1,4 @@
-$("#comment_sentences").append("<%= escape_javascript (render :partial => 'comment_message') %>");
-$(".comment textarea").val("");
+<%if @comment%>
+  $("#comment_sentences").append("<%= escape_javascript (render :partial => 'comment_message') %>");
+  $(".comment textarea").val("");
+<%end%>

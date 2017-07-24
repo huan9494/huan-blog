@@ -1,13 +1,10 @@
 <h4>Please confirm the following information before submit!</h4>
-<div class="row">
-  <%= link_to "Confirm",admin_blogs_path(blog: {title: @blog.title, body: @blog.body, published: @blog.published, promoted: @blog.promoted, publish: @blog.publish, image: @blog.image, category: @blog.category, author_name: @blog.author_name, author_position: @blog.author_position, author_name: @blog.author_age, author_avatar: @author_avatar}), method: :post, class: "btn btn-primary pull-right" %>
-</div>
 
 <div class="panel-body">
     <div class="row">
       <div class="form-group">
         <div class="col-sm-2">
-          <label class="form-title pull-right">Title</label>
+          <label class="form-title pull-right"><%= t('title') %></label>
         </div>
         <div class="col-sm-10">
           <h4><%= @blog.title %></h4>
@@ -18,7 +15,7 @@
     <div class="row">
       <div class="form-group">
         <div class="col-sm-2">
-          <label class="form-title pull-right">Category</label>
+          <label class="form-title pull-right"><%= t('category') %></label>
         </div>
         <div class="col-sm-10">
           <h4><%= @blog.category %></h4>
@@ -29,7 +26,7 @@
     <div class="row">
       <div class="form-group">
         <div class="col-sm-2">
-          <label class="form-title pull-right">Publish</label>
+          <label class="form-title pull-right"><%= t('release_date') %></label>
         </div>
         <div class="col-sm-5">
           <h4><%= @blog.publish %></h4>
@@ -40,7 +37,7 @@
     <div class="row">
       <div class="form-group">
         <div class="col-sm-2">
-          <label class="form-title pull-right">Published?</label>
+          <label class="form-title pull-right"><%= t('publishing_settings') %></label>
         </div>
         <div class="col-sm-10">
           <h4><%= @blog.published %></h4>
@@ -51,7 +48,7 @@
     <div class="row">
       <div class="form-group">
         <div class="col-sm-2">
-          <label class="form-title pull-right">Promoted?</label>
+          <label class="form-title pull-right"><%= t('promoted') %></label>
         </div>
         <div class="col-sm-10">
           <h4><%= @blog.promoted %></h4>
@@ -62,7 +59,7 @@
     <div class="row">
       <div class="form-group">
         <div class="col-sm-2">
-          <label class="form-title pull-right">Image</label>
+          <label class="form-title pull-right"><%= t('headline_thumb') %></label>
         </div>
         <div class="col-sm-3">
           <% if @blog.image.length > 0 %>
@@ -77,7 +74,7 @@
     <div class="row">
       <div class="form-group">
         <div class="col-sm-2">
-          <label class="form-title pull-right">Body</label>
+          <label class="form-title pull-right"><%= t('body') %></label>
         </div>
         <div class="col-sm-10">
           <%= @blog.body.html_safe %>
@@ -88,7 +85,7 @@
     <div class="row">
       <div class="form-group">
         <div class="col-sm-2">
-          <label class="form-title pull-right">Author name</label>
+          <label class="form-title pull-right"><%= t('author_name') %></label>
         </div>
         <div class="col-sm-5">
           <h4><%= @blog.author_name %></h4>
@@ -99,7 +96,7 @@
     <div class="row">
       <div class="form-group">
         <div class="col-sm-2">
-          <label class="form-title pull-right">Author position</label>
+          <label class="form-title pull-right"><%= t('author_position') %></label>
         </div>
         <div class="col-sm-5">
           <h4><%= @blog.author_position %></h4>
@@ -110,7 +107,7 @@
     <div class="row">
       <div class="form-group" data-no-turbolink>
         <div class="col-sm-2">
-          <label class="form-title pull-right">Author age</label>
+          <label class="form-title pull-right"><%= t('author_age') %></label>
         </div>
         <div class="col-sm-3">
           <h4><%= @blog.author_age %></h4>
@@ -121,7 +118,7 @@
     <div class="row">
       <div class="form-group">
         <div class="col-sm-2">
-          <label class="form-title pull-right">Author avatar</label>
+          <label class="form-title pull-right"><%= t('author_avatar') %></label>
         </div>
         <div class="col-sm-3">
           <% if @blog.author_avatar.length > 0 %>
@@ -132,4 +129,21 @@
         </div>
       </div>
     </div>
+    <br>
+    <div class="row">
+      <div class="form-group col-sm-2 col-sm-offset-5">
+        <div class="col-sm-6">
+          <button class="btn btn-default" id="back_button">Back</button>
+        </div>
+        <div class="col-sm-6">
+          <% if params[:id] %>
+            <%= link_to "Confirm_patch",admin_blog_path(blog: {title: @blog.title, body: @blog.body, published: @blog.published, promoted: @blog.promoted, publish: @blog.publish, image: @blog.image, category: @blog.category, author_name: @blog.author_name, author_position: @blog.author_position, author_age: @blog.author_age, author_avatar: @author_avatar}), method: :patch, class: "btn btn-primary" %>
+          <% else %>
+            <%= link_to "Confirm_post",admin_blogs_path(blog: {title: @blog.title, body: @blog.body, published: @blog.published, promoted: @blog.promoted, publish: @blog.publish, image: @blog.image, category: @blog.category, author_name: @blog.author_name, author_position: @blog.author_position, author_age: @blog.author_age, author_avatar: @author_avatar}), method: :post, class: "btn btn-primary" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+
 </div>

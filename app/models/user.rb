@@ -6,4 +6,5 @@ class User < ApplicationRecord
   enum role: [:bloger, :admin]
 
   has_many :blog_users
+  has_many :comments
 end

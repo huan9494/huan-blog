@@ -33,10 +33,10 @@ ActiveRecord::Schema.define(version: 20170713014525) do
     t.string   "author_position",   default: "塾講師"
     t.integer  "author_age",        default: 26
     t.string   "author_avatar",     default: ""
-    t.integer  "biglikes_count",    default: 0,        null: false
-    t.integer  "likes_count",       default: 0,        null: false
-    t.integer  "dislikes_count",    default: 0,        null: false
-    t.integer  "bigdislikes_count", default: 0,        null: false
+    t.integer  "biglikes_count",    default: 0
+    t.integer  "likes_count",       default: 0
+    t.integer  "dislikes_count",    default: 0
+    t.integer  "bigdislikes_count", default: 0
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.string   "category"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 20170713014525) do
   create_table "comments", force: :cascade do |t|
     t.text     "body"
     t.integer  "blog_id"
+    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["blog_id"], name: "index_comments_on_blog_id"

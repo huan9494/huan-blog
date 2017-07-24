@@ -12,11 +12,10 @@ class CreateBlogs < ActiveRecord::Migration[5.0]
       t.string :author_position, default: "塾講師"
       t.integer :author_age, default: 26
       t.string :author_avatar
-      t.integer :biglikes_count, null: false, default: 0
-      t.integer :likes_count, null: false, default: 0
-      t.integer :dislikes_count, null: false, default: 0
-      t.integer :bigdislikes_count, null: false, default: 0
-
+      t.integer :biglikes_count, default: 0
+      t.integer :likes_count, default: 0
+      t.integer :dislikes_count, default: 0
+      t.integer :bigdislikes_count, default: 0
       t.timestamps
     end
   end

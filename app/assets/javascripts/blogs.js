@@ -22,14 +22,26 @@ $(document).on("turbolinks:load", function(){
 
   $(".published_button").on("click", function(){
     var a = $(this).parent().attr("blog_id");
+    var b = $(this).attr("publish_val");
+    
+    if (b == "published")
+    {
+      $("#unpublished_button_" + a).show();
+      $("#published_button_" + a).hide();
+      $("#published_blog_" + a).html("公開");
+    }else{
+      $("#unpublished_button_" + a).hide();
+      $("#published_button_" + a).show();
+      $("#published_blog_" + a).html("非公開");
+    }
+
     $.ajax({
       url: '/admin/blogs/'+a,
       dataType: 'script',
       method: 'patch',
-      data: {redirect_check: 1, blog:{published: "not_published"}},
+      data: {redirect_check: 1, blog:{published: b}},
       success: function(){
-        $("#published_blog_" + a).html("非公開");
-        $("#published_button_" + a).hide();
+        
       }
     });
   });
@@ -61,6 +73,17 @@ $(document).on("turbolinks:load", function(){
           $('div.author_avatar_gallery').empty();
           imagesPreview(this, 'div.author_avatar_gallery');
       });
+  });
+
+  $("#btn_comment").on("click", function(){
+    if ($("textarea").val().length == 0) {
+      $("#new_comment").submit(function(e){
+        e.preventDefault();
+        return false;
+      });
+    }else{
+      $("#new_comment").unbind().submit();
+    };
   });
   
 });

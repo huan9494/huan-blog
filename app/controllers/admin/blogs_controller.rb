@@ -2,16 +2,24 @@ class Admin::BlogsController < ApplicationController
 
   layout 'admin'
   before_action :set_blog, only: [:show, :edit, :destroy, :update]
+  
   def default_admin_page   
   end
   
   def index
-    @blogs = Blog.order("id ASC").paginate(page: params[:page], per_page: 20)
+    # @blogs = Blog.order("id ASC").paginate(page: params[:page], per_page: 20)
     # @blogs = Blog.search("*",order: {id: :asc},page: params[:page], per_page: 20)
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    # sort = Blog.sort_funct(params[:sort])
+    # @blogs = Blog.find_excute(params[:category], params[:published],
+    #                           params[:promoted], params[:query], sort).
+    #                           paginate(page: params[:page], per_page: 20)
+    @blog_count = Blog.cache_blog_count
+    @blogs = Blog.search_category(params[:category])
+                 .search_published(params[:published])
+                 .search_promoted(params[:promoted])
+                 .search_title(params[:query])
+                 .order_blog(params[:sort])
+                 .paginate(page: params[:page], per_page: 20, total_entries: @blog_count)
   end
   def show
   end
@@ -22,6 +30,7 @@ class Admin::BlogsController < ApplicationController
     @blog = Blog.new(blog_params)
     if @blog.save
       flash[:notice] = "Create successfully!"
+      Blog.delete_cached_blog_count
       redirect_to admin_root_path
     else
       render 'new'
@@ -39,6 +48,7 @@ class Admin::BlogsController < ApplicationController
   end
   def destroy
     flash[:notice] = "Destroy successfully!"
+    Blog.delete_cached_blog_count
     redirect_to admin_root_path
   end
   def search
@@ -46,6 +56,8 @@ class Admin::BlogsController < ApplicationController
     @blog_search = Blog.find_excute(params[:category], params[:published],
                                     params[:promoted], params[:query], sort).
                                     paginate(page: params[:page], per_page: 20)
+
+
     # if params[:query].length > 0
     #   @blogs = search_query(params[:query])
     # else
@@ -55,7 +67,12 @@ class Admin::BlogsController < ApplicationController
   end
   def confirm
     @blog = Blog.new(blog_params)
-    render "new" if @blog.invalid?
+    
+    if params[:id]
+      render "edit" if @blog.invalid?
+    else
+      render "new" if @blog.invalid?
+    end  
   end
   private
   def set_blog

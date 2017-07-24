@@ -44,38 +44,38 @@ module BlogHelper
     end
   end
   def category_array
-    Category.order("created_at ASC").pluck(:name)
+    Category.cache_category
   end
   def convert_time(datetime)
     datetime.strftime("%Y年%-m月%-d日 %H:%M")
   end
 
   def biglikes_count(count_action)
-    if @count_action["biglike"]
-      @biglikes_count = count_action["biglike"]
+    if count_action["biglike"]
+      count_action["biglike"]
     else
-      @biglikes_count = 0
+      0
     end
   end
   def likes_count(count_action)
-    if @count_action["like"]
-      @likes_count = count_action["biglike"]
+    if count_action["like"]
+      count_action["like"]
     else
-      @likes_count = 0
+      0
     end
   end
   def dislikes_count(count_action)
-    if @count_action["dislike"]
-      @dislikes_count = @count_action["dislike"]
+    if count_action["dislike"]
+      count_action["dislike"]
     else
-      @dislikes_count = 0
+      0
     end
   end
   def bigdislikes_count(count_action)
-    if @count_action["bigdislike"]
-      @bigdislikes_count = @count_action["bigdislike"]
+    if count_action["bigdislike"]
+      count_action["bigdislike"]
     else
-      @bigdislikes_count = 0
+      0
     end
   end
 
