@@ -3,18 +3,29 @@ $(document).on("turbolinks:load", function(){
     locale: 'ja',
     useCurrent: false
   });
-
-
+  $('.hidden_field').datetimepicker({
+    locale: 'ja',
+    useCurrent: false
+  });
+  $('.btn_day_change').on('click', function(){
+    var a = $(this).parent().attr("blog_id");
+    $(this).hide();
+    $("#hidden_field_"+a).show();
+    $("#publish_time_"+a).hide();
+  })
   $('.datetimepicker_cell').on('dp.change', function(data){
     var a = $(this).parent().attr("blog_id");
     $(".bootstrap-datetimepicker-widget").hide();
+    $("#publish_time_"+a).html(data.date.format("Y年MM月D日 hh:mm"));
+        $("#btn_day_change_"+a).show();
+        $("#hidden_field_"+a).hide();
+        $("#publish_time_"+a).show();
     $.ajax({
       url: '/admin/blogs/'+a,
       dataType: 'script',
       method: "patch",
       data: {redirect_check: 1, blog:{publish: data.date.format("Y-MM-D hh:mm") }},
       success: function(){
-        $("#publish_time_"+a).html(data.date.format("Y年MM月D日 hh:mm"));
         
       }
     });

@@ -18,5 +18,10 @@ class CreateBlogs < ActiveRecord::Migration[5.0]
       t.integer :bigdislikes_count, default: 0
       t.timestamps
     end
+    add_index :blogs, :title
+    add_index :blogs, :published
+    add_index :blogs, :promoted
+    add_index :blogs, :category_id
+    add_index :blogs, :created_at
   end
 end

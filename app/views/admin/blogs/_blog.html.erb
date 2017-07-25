@@ -23,9 +23,9 @@
       <div class="row" id="publish_time_<%=blog.id%>" class="publish_time" ><%= convert_time(blog.publish) %></div>
       <div class="row" blog_id=<%=blog.id%> >
         <div class='input-group date datetimepicker_cell' style="display: inline;">
-            <input type='hidden' id="hidden_field_<%=blog.id%>" >
-            <span class="input-group-addon" style="padding: 0; background-color: transparent; border: none; display: inline;">
-                <span class="btn btn-xs btn-default" ><%= t('day_change') %></span>
+            <input type='text' id="hidden_field_<%=blog.id%>" style="display: none;" class="hidden_field">
+            <span class="" style="padding: 0; background-color: transparent; border: none; display: inline;" blog_id=<%=blog.id%> >
+                <span class="btn btn-xs btn-default btn_day_change" id="btn_day_change_<%=blog.id%>"><%= t('day_change') %></span>
             </span>
         </div>
 

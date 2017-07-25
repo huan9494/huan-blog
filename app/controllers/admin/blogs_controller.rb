@@ -18,6 +18,8 @@ class Admin::BlogsController < ApplicationController
                  .search_published(params[:published])
                  .search_promoted(params[:promoted])
                  .search_title(params[:query])
+                 .select(:id, :created_at, :category, :title, :promoted, :author_name,
+                         :author_avatar, :published, :publish)
                  .order_blog(params[:sort])
                  .paginate(page: params[:page], per_page: 20, total_entries: @blog_count)
   end
@@ -67,7 +69,6 @@ class Admin::BlogsController < ApplicationController
   end
   def confirm
     @blog = Blog.new(blog_params)
-    
     if params[:id]
       render "edit" if @blog.invalid?
     else

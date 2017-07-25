@@ -7,5 +7,6 @@ class CreateBlogUsers < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+    add_index :blog_users, :blog_id
   end
 end
