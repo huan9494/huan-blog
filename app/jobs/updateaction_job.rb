@@ -1,3 +1,4 @@
+# Update likes, dislike
 class UpdateactionJob < ApplicationJob
   queue_as :default
 

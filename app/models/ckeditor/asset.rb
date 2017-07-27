@@ -1,7 +1,10 @@
-class Ckeditor::Asset < ActiveRecord::Base
-  include Ckeditor::Orm::ActiveRecord::AssetBase
+module Ckeditor
+  # Asset model
+  class Asset < ActiveRecord::Base
+    include Ckeditor::Orm::ActiveRecord::AssetBase
 
-  delegate :url, :current_path, :content_type, to: :data
+    delegate :url, :current_path, :content_type, to: :data
 
-  validates :data, presence: true
+    validates :data, presence: true
+  end
 end

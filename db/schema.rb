@@ -28,11 +28,11 @@ ActiveRecord::Schema.define(version: 20170713014525) do
     t.integer  "published",         default: 0
     t.integer  "promoted",          default: 0
     t.datetime "publish"
-    t.string   "image",             default: ""
+    t.string   "image"
     t.string   "author_name",       default: "ナルフォード"
     t.string   "author_position",   default: "塾講師"
     t.integer  "author_age",        default: 26
-    t.string   "author_avatar",     default: ""
+    t.string   "author_avatar"
     t.integer  "biglikes_count",    default: 0
     t.integer  "likes_count",       default: 0
     t.integer  "dislikes_count",    default: 0

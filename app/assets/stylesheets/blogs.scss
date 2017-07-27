@@ -10,6 +10,19 @@
   width: 100%;
   margin: 0;
   z-index: 100;
+  ul{
+    padding-left: 12vh;
+    li{
+     list-style-type: none;
+     display: inline-block;
+     margin-right: 2vh;
+     padding-top: 2vh;
+     height: 7vh;
+     width: 27vw;
+     text-align: center;
+     background-color: white;
+    }
+  }
   }
 .main-view{
   // position: fixed;
@@ -171,8 +184,8 @@
             padding: 0px;
             position: relative;
             img{
-              width: 5.33vw;
-              height: 5.33vw;
+              height: 2.7vh;;
+              width: auto;
               position: absolute;
               top: 0;
               left: 0;
@@ -446,8 +459,8 @@
       margin-top: 2.248vh;
       float: left;
       img{
-        height: 28.11vh;
-        width: auto;
+        max-height: 28.11vh;
+        max-width: 17.3vh;
       }
     }
     .author_info{

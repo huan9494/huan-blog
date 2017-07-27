@@ -1,4 +1,4 @@
-<div class="panel-body">
+<div class="panel-body" id="form_blog">
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog" style="padding: 10px;">
       <div class="panel panel-default" id="modal_content" style="position: relative">
@@ -23,10 +23,8 @@
             <%= f.label "#{t('title')}", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-10">
-            <%= f.text_field :title, autofocus: true, class: 'form-control' %>
-            <% if @title_error.length > 0 %>
-              <div class="error"><%= @title_error.html_safe %></div>
-            <% end %>
+            <%= f.text_field :title, autofocus: true, class: 'form-control', id: 'title_field' %>
+            <div class="error" id="title_error"><%= @title_error.html_safe %></div>
           </div>
         </div>
       </div>
@@ -37,10 +35,8 @@
             <%= f.label "#{t('category')}", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-10">
-            <%= f.select :category, options_for_select(category_array),class: 'form-control' %>
-            <% if @category_error.length > 0 %>
-              <div class="error"><%= @category_error.html_safe %></div>
-            <% end %>
+            <%= f.select :category, options_for_select(category_array, @blog.category), class: 'form-control', id: 'category_field' %>
+            <div class="error" id="category_error"><%= @category_error.html_safe %></div>
           </div>
         </div>
       </div>
@@ -51,10 +47,8 @@
             <%= f.label "#{t('release_date')}", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-5">
-            <%= f.text_field :publish, class: 'form-control', id: "date_field" %>
-            <% if @publish_error.length > 0 %>
-              <div class="error"><%= @publish_error.html_safe %></div>
-            <% end %>
+            <%= f.text_field :publish, class: 'form-control', id: "publish_field" %>
+            <div class="error" id="publish_error"><%= @publish_error.html_safe %></div>
           </div>
         </div>
       </div>
@@ -88,21 +82,18 @@
           </div>
           <div class="col-sm-3">
             <div class="gallery">
-              <% if @blog.image? %>
-                <%= image_tag(@blog.image_url) %>
+              <% if @blog.image %>
+                <%= image_tag(@blog.image.url) %>
               <% else %>
                 <img src="/assets/author_avatar" alt="image">
               <% end %>
             </div>
-            <label class="btn btn-default btn-sm" for="blog_image">
-              <%= f.file_field :image, style: "display: none;", id: "blog_image" %>
-              <%= f.hidden_field :image_cache %>
+            <label class="btn btn-default btn-sm" for="image_upload">
+              <%= f.file_field :image, style: "display: none;", id: "image_upload" %>
               <%= t('open') %>
             </label>
 
-            <% if @image_error.length > 0 %>
-              <div class="error"><%= @image_error.html_safe %></div>
-            <% end %>
+            <div class="error" id="image_error"><%= @image_error.html_safe %></div>
           </div>
         </div>
       </div>
@@ -115,9 +106,7 @@
           <div class="col-sm-10">
             <div id="preview"><%= link_to "#{t('preview')}".html_safe, "#" %></div>
             <br>
-            <% if @body_error.length > 0 %>
-              <div class="error"><%= @body_error %></div>
-            <% end %>
+            <div class="error" id="body_error"><%= @body_error %></div>
             <div>
               <%= f.text_area :body, class: "form-control ckeditor", id: "body_text" %>
             </div>
@@ -132,10 +121,8 @@
             <%= f.label "#{t('author_name')}", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-5">
-            <%= f.text_field :author_name, class: "form-control" %>
-            <% if @author_name_error.length > 0 %>
-              <div class="error"><%= @author_name_error.html_safe %></div>
-            <% end %>
+            <%= f.text_field :author_name, class: "form-control", id: 'author_name_field' %>
+            <div class="error" id="author_name_error"><%= @author_name_error.html_safe %></div>
           </div>
         </div>
       </div>
@@ -146,10 +133,8 @@
             <%= f.label "#{t('author_position')}", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-5">
-            <%= f.text_field :author_position, class: "form-control" %>
-            <% if @author_position_error.length > 0 %>
-              <div class="error"><%= @author_position_error.html_safe %></div>
-            <% end %>
+            <%= f.text_field :author_position, class: "form-control", id: 'author_position_field' %>
+            <div class="error" id="author_position_error"><%= @author_position_error.html_safe %></div>
           </div>
         </div>
       </div>
@@ -160,10 +145,8 @@
             <%= f.label "#{t('author_age')}", class: "form-title pull-right" %>
           </div>
           <div class="col-sm-3">
-            <%= f.text_field :author_age, type: "number", class: "form-control" %>
-            <% if @author_age_error.length > 0 %>
-              <div class="error"><%= @author_age_error.html_safe %></div>
-            <% end %>
+            <%= f.text_field :author_age, type: "number", class: "form-control", id: 'author_age_field' %>
+            <div class="error" id="author_age_error"><%= @author_age_error.html_safe %></div>
           </div>
         </div>
       </div>
@@ -175,22 +158,21 @@
           </div>
           <div class="col-sm-3">
             <div class="author_avatar_gallery">
-              <% if @blog.author_avatar? %>
-                <%= image_tag(@blog.author_avatar_url) %>
+              <% if @blog.author_avatar %>
+                <%= image_tag(@blog.author_avatar.url) %>
               <% else %>
                 <img src="/assets/author_avatar" alt="image">
               <% end %>
             </div>
-            <label class="btn btn-default btn-sm" for="author_avatar_image">
-              <%= f.file_field :author_avatar, style: "display: none;", id: "author_avatar_image" %>
-              <%= f.hidden_field :author_avatar_cache %>
+
+            <label class="btn btn-default btn-sm" for="author_avatar_upload">
+              <%= f.file_field :author_avatar, style: "display: none;", id: "author_avatar_upload" %>
               <%= t('open') %>
             </label>
-            
-            <% if @author_avatar_error.length > 0 %>
-              <div class="error"><%= @author_avatar_error.html_safe %></div>
-            <% end %>
+
+            <div class="error" id="author_avatar_error"><%= @author_avatar_error.html_safe %></div>
           </div>
+
         </div>
       </div>
       <br>
@@ -200,7 +182,7 @@
             <%= link_to "#{t('list')}", admin_blogs_path, class: "btn btn-default" %>
           </div>
           <div class="col-sm-6">
-            <%= f.button "#{t('confirm')}", class: "btn btn-primary" %>
+            <%= f.button "#{t('confirm')}", class: "btn btn-primary", id: "btn_commit" %>
           </div>
         </div>
       </div>

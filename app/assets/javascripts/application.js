@@ -21,9 +21,10 @@
 //= require ckeditor/config
 //= require ckeditor/plugins/widget/plugin
 //= require ckeditor/plugins/html5video/plugin
+//= require slick.min
 //= require_tree .
 $(document).on("turbolinks:load", function(){
-  $("#date_field").datetimepicker(
+  $("#publish_field").datetimepicker(
     {
       locale: 'ja',
       useCurrent: false,
@@ -59,4 +60,12 @@ $(document).on("turbolinks:load", function(){
   $("#back_button").on("click", function(){
     window.history.back();
   });
+
+  $('.autoplay').slick({
+    slidesToShow: 3,
+    autoplay: true,
+    autoplaySpeed: 2000,
+  });
+
+  $('.menu-bar ul button').hide();
 });

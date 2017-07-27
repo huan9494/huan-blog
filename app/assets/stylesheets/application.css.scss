@@ -17,6 +17,7 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 @import 'bootstrap-datetimepicker';
+@import 'slick';
 .container
 {
   margin-bottom:100px;
@@ -57,6 +58,7 @@ select{
   #modal_content_body{
     height: 640px;
     max-height: 640px;
+    margin-top: 40px;
   }
 }
 .modal-dialog{
