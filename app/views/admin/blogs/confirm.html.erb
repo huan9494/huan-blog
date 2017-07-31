@@ -135,11 +135,14 @@
         <div class="col-sm-6">
           <button class="btn btn-default" id="back_button">Back</button>
         </div>
+
         <div class="col-sm-6">
           <% if params[:id] %>
-            <%= link_to "Confirm_patch",admin_blog_path(blog: {title: @blog.title, body: @blog.body, published: @blog.published, promoted: @blog.promoted, publish: @blog.publish, image: @blog.image, category: @blog.category, author_name: @blog.author_name, author_position: @blog.author_position, author_age: @blog.author_age, author_avatar: @author_avatar}), method: :patch, class: "btn btn-primary" %>
+            <%= link_to "Confirm_patch",admin_blog_path(blog: {title: @blog.title, body: @blog.body, published: @blog.published, promoted: @blog.promoted, publish: @blog.publish, image: @blog.image.url, category: @blog.category, author_name: @blog.author_name, author_position: @blog.author_position, author_age: @blog.author_age, author_avatar: @blog.author_avatar.url}), method: :patch, class: "btn btn-primary" %>
+            <!-- <button class="btn btn-primary" id="btn-patch" params = <%= params[:blog][:title] %>>Confirm-patch</button> -->
           <% else %>
-            <%= link_to "Confirm_post",admin_blogs_path(blog: {title: @blog.title, body: @blog.body, published: @blog.published, promoted: @blog.promoted, publish: @blog.publish, image: @blog.image, category: @blog.category, author_name: @blog.author_name, author_position: @blog.author_position, author_age: @blog.author_age, author_avatar: @author_avatar}), method: :post, class: "btn btn-primary" %>
+            <%= link_to "Confirm_post",admin_blogs_path(blog: {title: @blog.title, body: @blog.body, published: @blog.published, promoted: @blog.promoted, publish: @blog.publish, category: @blog.category, author_name: @blog.author_name, author_position: @blog.author_position, author_age: @blog.author_age, author_avatar: @blog.author_avatar.url, image: @blog.image.url }), method: :post, class: "btn btn-primary" %>
+<!--             <button class="btn btn-primary" id="btn-post" params = <%= params[:blog][:image] %>>Confirm-post</button> -->
           <% end %>
         </div>
       </div>

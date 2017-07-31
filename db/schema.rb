@@ -40,6 +40,11 @@ ActiveRecord::Schema.define(version: 20170713014525) do
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.string   "category"
+    t.index ["title"], name: "index_blogs_on_title"
+    t.index ["published"], name: "index_blogs_on_published"
+    t.index ["promoted"], name: "index_blogs_on_promoted"
+    t.index ["created_at"], name: "index_blogs_on_created_at"
+    t.index ["category"], name: "index_blogs_on_category"
   end
 
   create_table "categories", force: :cascade do |t|

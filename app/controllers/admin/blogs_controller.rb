@@ -3,6 +3,7 @@ module Admin
   class BlogsController < ApplicationController
     layout 'admin'
     before_action :set_blog, only: [:show, :edit, :destroy, :update]
+    DEFAULT_IMAGE_URL = "/assets/thumb_author_avatar.png"
 
     def default_admin_page
     end
@@ -35,6 +36,18 @@ module Admin
 
     def create
       @blog = Blog.new(blog_params)
+      if params[:blog][:image] == DEFAULT_IMAGE_URL
+        @blog.image = File.open(Rails.root.to_s + "/app/assets/images/thumb_author_avatar.png")
+      else
+        @blog.image = File.open(Rails.root.to_s + "/public/" + params[:blog][:image])
+      end
+
+      if params[:blog][:author_avatar] == DEFAULT_IMAGE_URL
+        @blog.author_avatar = File.open(Rails.root.to_s + "/app/assets/images/thumb_author_avatar.png")
+      else
+        @blog.author_avatar = File.open(Rails.root.to_s + "/public/" + params[:blog][:author_avatar])
+      end
+
       if @blog.save
         flash[:notice] = 'Create successfully!'
         Blog.delete_cached_blog_count
@@ -48,6 +61,18 @@ module Admin
     end
 
     def update
+      if params[:blog][:image] == DEFAULT_IMAGE_URL
+        @blog.update(image: File.open(Rails.root.to_s + "/app/assets/images/thumb_author_avatar.png"))
+      else
+        @blog.update(image: File.open(Rails.root.to_s + "/public/" + params[:blog][:image]))
+      end
+
+      if params[:blog][:author_avatar] == DEFAULT_IMAGE_URL
+        @blog.update(author_avatar: File.open(Rails.root.to_s + "/app/assets/images/thumb_author_avatar.png"))
+      else
+        @blog.update(author_avatar: File.open(Rails.root.to_s + "/public/" + params[:blog][:author_avatar]))
+      end
+      
       if @blog.update(blog_params)
         flash[:notice] = 'Update successfully!'
         redirect_to admin_blogs_path unless params[:redirect_check]
@@ -79,11 +104,16 @@ module Admin
 
     def confirm
       @blog = Blog.new(blog_params)
+      
+
       if params[:id]
         render 'edit' if @blog.invalid?
       else
         render 'new' if @blog.invalid?
-      end  
+      end
+      if params[:blog][:action]
+        puts @blog.title
+      end
     end
 
     private
@@ -96,7 +126,8 @@ module Admin
       params.require(:blog).permit(:title, :body, :published, :promoted,
                                    :publish, :image, :category,
                                    :author_name, :author_position,
-                                   :author_age, :author_avatar)
+                                   :author_age, :author_avatar, :remote_image_url,
+                                   :remote_author_avatar_url)
     end
 
     def search_query(query)

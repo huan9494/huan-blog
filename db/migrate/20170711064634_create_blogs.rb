@@ -7,7 +7,7 @@ class CreateBlogs < ActiveRecord::Migration[5.0]
       t.integer :promoted, default: 0
       t.datetime :publish
       t.string :image
-      t.references :category, foreign_key: true
+      t.string :category
       t.string :author_name, default: "ナルフォード"
       t.string :author_position, default: "塾講師"
       t.integer :author_age, default: 26
@@ -21,7 +21,7 @@ class CreateBlogs < ActiveRecord::Migration[5.0]
     add_index :blogs, :title
     add_index :blogs, :published
     add_index :blogs, :promoted
-    add_index :blogs, :category_id
+    add_index :blogs, :category
     add_index :blogs, :created_at
   end
 end

@@ -241,6 +241,7 @@ DEPENDENCIES
   mini_magick
   momentjs-rails (>= 2.9.0)
   mongoid
+  nokogiri
   puma (~> 3.0)
   rails (~> 5.0.4)
   remotipart

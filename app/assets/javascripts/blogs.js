@@ -136,6 +136,7 @@ $(document).on("turbolinks:load", function(){
       var inpFiles = document.getElementById('image_upload');
       if (inpFiles.files.item(0).size > 2048000) {
         $("#image_error").append(" ファイルサイズは２MB以内です。");
+        data_valid = false;
       };
     }
 
@@ -192,17 +193,20 @@ $(document).on("turbolinks:load", function(){
       var authorinpFiles = document.getElementById('author_avatar_upload');
       if (authorinpFiles.files.item(0).size > 2048000) {
         $("#author_avatar_error").append(" ファイルサイズは２MB以内です。");
+        data_valid = false;
       };
     }
 
     if (data_valid == false) {
-        $("#new_blog").submit(function(e){
+        $("#blog_form").submit(function(e){
           e.preventDefault();
+          return false;
       });
     }else{
-      $("#new_blog").unbind().submit();
+      $("#blog_form").unbind().submit();
     };
   });
 
+  
 
 });

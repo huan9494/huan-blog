@@ -15,7 +15,7 @@
   </div>
   <h2><%= t('creat_post') %></h2>
 
-    <%= form_for [:admin, @blog], url: {action: 'confirm'} do |f| %>
+    <%= form_for [:admin, @blog], url:{action: 'confirm'}, html: {id: 'blog_form'} do |f| %>
       <% custom_errors(@blog) %>
       <div class="row">
         <div class="form-group">
@@ -83,7 +83,7 @@
           <div class="col-sm-3">
             <div class="gallery">
               <% if @blog.image %>
-                <%= image_tag(@blog.image.url) %>
+                <%= image_tag(@blog.image.url(:thumb)) %>
               <% else %>
                 <img src="/assets/author_avatar" alt="image">
               <% end %>
@@ -159,7 +159,7 @@
           <div class="col-sm-3">
             <div class="author_avatar_gallery">
               <% if @blog.author_avatar %>
-                <%= image_tag(@blog.author_avatar.url) %>
+                <%= image_tag(@blog.author_avatar.url(:thumb)) %>
               <% else %>
                 <img src="/assets/author_avatar" alt="image">
               <% end %>

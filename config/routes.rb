@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     root 'blogs#default_admin_page'
     get 'blogs/default_admin_page'
     patch 'blogs/:id/confirm', to: 'blogs#confirm'
+    # post 'blogs/confirm', to: 'blogs#confirm'
     resources :blogs do
       collection do
         get :search
